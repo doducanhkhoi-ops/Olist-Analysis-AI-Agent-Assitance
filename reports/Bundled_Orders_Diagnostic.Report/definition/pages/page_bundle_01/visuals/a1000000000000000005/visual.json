@@ -20,13 +20,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_fulfillment_quadrants"
+                      "Entity": "fact_bundle_summary"
                     }
                   },
-                  "Property": "delivery_quadrant_id"
+                  "Property": "basket_type"
                 }
               },
-              "queryRef": "fact_fulfillment_quadrants.delivery_quadrant_id",
+              "queryRef": "fact_bundle_summary.basket_type",
               "nativeQueryRef": "Ph\u01b0\u01a1ng Th\u1ee9c",
               "active": true
             }
@@ -41,7 +41,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "fact_fulfillment_quadrants"
+                          "Entity": "fact_bundle_summary"
                         }
                       },
                       "Property": "total_orders"
@@ -50,7 +50,7 @@
                   "Function": 0
                 }
               },
-              "queryRef": "Sum(fact_fulfillment_quadrants.total_orders)",
+              "queryRef": "Sum(fact_bundle_summary.total_orders)",
               "nativeQueryRef": "Doanh Thu (GMV)"
             }
           ]
@@ -390,42 +390,10 @@
       "title": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'C\u01a1 C\u1ea5u S\u1ed1 \u0110\u01a1n Theo 4 Ph\u00e2n Kh\u00fac B\u00e0n Giao'"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Segoe UI Semibold'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "11D"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#F8FAFC'"
-                    }
-                  }
+                  "Value": "'C\u01a1 C\u1ea5u S\u1ed1 L\u01b0\u1ee3ng \u0110\u01a1n Theo Lo\u1ea1i Gi\u1ecf H\u00e0ng'"
                 }
               }
             }

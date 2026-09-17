@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "c1000000000000000002",
+  "name": "c1000000000000000005",
   "position": {
-    "x": 400,
+    "x": 1540,
     "y": 112,
-    "z": 4100,
+    "z": 4400,
     "height": 114,
     "width": 360,
-    "tabOrder": 4100
+    "tabOrder": 4400
   },
   "visual": {
     "visualType": "cardVisual",
@@ -22,17 +22,17 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "fact_fulfillment_quadrants"
+                          "Entity": "fact_bundle_summary"
                         }
                       },
-                      "Property": "total_gmv"
+                      "Property": "pct_1_star"
                     }
                   },
-                  "Function": 0
+                  "Function": 4
                 }
               },
-              "queryRef": "Sum(fact_fulfillment_quadrants.total_gmv)",
-              "nativeQueryRef": "total_gmv"
+              "queryRef": "Sum(fact_bundle_summary.pct_1_star)",
+              "nativeQueryRef": "pct_1_star"
             }
           ]
         }
@@ -84,7 +84,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#94A3B8'"
+                      "Value": "'#FB923C'"
                     }
                   }
                 }
@@ -125,7 +125,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#10B981'"
+                      "Value": "'#EF4444'"
                     }
                   }
                 }
@@ -134,7 +134,7 @@
             "labelDisplayUnits": {
               "expr": {
                 "Literal": {
-                  "Value": "'1000'"
+                  "Value": "'0'"
                 }
               }
             }
@@ -157,7 +157,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'T\u1ed4NG DOANH THU HO\u00c0N T\u1ea4T (BRL)'"
+                  "Value": "'T\u1ef6 L\u1ec6 KH\u00c1CH CH\u1ea4M 1-SAO (%)'"
                 }
               }
             },
@@ -291,28 +291,5 @@
         }
       ]
     }
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "59dfb735b7d5749c6700",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "fact_payment_types"
-                  }
-                },
-                "Property": "orders"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_fulfillment_quadrants"
+                      "Entity": "fact_bundle_summary"
                     }
                   },
-                  "Property": "delivery_quadrant"
+                  "Property": "basket_type"
                 }
               },
-              "queryRef": "fact_fulfillment_quadrants.delivery_quadrant",
-              "nativeQueryRef": "delivery_quadrant",
+              "queryRef": "fact_bundle_summary.basket_type",
+              "nativeQueryRef": "basket_type",
               "active": true
             }
           ]
@@ -61,7 +61,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'L\u1eccC PH\u00c2N KH\u00daC B\u00c0N GIAO SLA:'"
+                  "Value": "'L\u1eccC THEO LO\u1ea0I GI\u1ece H\u00c0NG:'"
                 }
               }
             },

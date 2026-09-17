@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "c1000000000000000004",
+  "name": "c1000000000000000001",
   "position": {
-    "x": 1160,
+    "x": 20,
     "y": 112,
-    "z": 4300,
+    "z": 4000,
     "height": 114,
     "width": 360,
-    "tabOrder": 4300
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -22,17 +22,17 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "fact_fulfillment_quadrants"
+                          "Entity": "fact_bundle_summary"
                         }
                       },
-                      "Property": "avg_review_score"
+                      "Property": "total_orders"
                     }
                   },
-                  "Function": 4
+                  "Function": 0
                 }
               },
-              "queryRef": "Sum(fact_fulfillment_quadrants.avg_review_score)",
-              "nativeQueryRef": "avg_review_score"
+              "queryRef": "Sum(fact_bundle_summary.total_orders)",
+              "nativeQueryRef": "total_orders"
             }
           ]
         }
@@ -84,7 +84,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F43F5E'"
+                      "Value": "'#38BDF8'"
                     }
                   }
                 }
@@ -125,7 +125,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#EC4899'"
+                      "Value": "'#38BDF8'"
                     }
                   }
                 }
@@ -134,7 +134,7 @@
             "labelDisplayUnits": {
               "expr": {
                 "Literal": {
-                  "Value": "'0'"
+                  "Value": "'1000000'"
                 }
               }
             }
@@ -157,7 +157,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'\u0110I\u1ec2M REVIEW SCORE TB'"
+                  "Value": "'T\u1ed4NG \u0110\u01a0N GIAO TH\u00c0NH C\u00d4NG'"
                 }
               }
             },
@@ -291,28 +291,5 @@
         }
       ]
     }
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "43fe72d05aeb535dea9d",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "fact_installments"
-                  }
-                },
-                "Property": "pct_1_star"
-              }
-            },
-            "Function": 4
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

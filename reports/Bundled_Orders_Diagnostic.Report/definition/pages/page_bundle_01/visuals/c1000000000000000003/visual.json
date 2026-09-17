@@ -22,17 +22,17 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "fact_fulfillment_quadrants"
+                          "Entity": "fact_bundle_summary"
                         }
                       },
-                      "Property": "aov"
+                      "Property": "avg_delivery_days"
                     }
                   },
                   "Function": 4
                 }
               },
-              "queryRef": "Sum(fact_fulfillment_quadrants.aov)",
-              "nativeQueryRef": "aov"
+              "queryRef": "Sum(fact_bundle_summary.avg_delivery_days)",
+              "nativeQueryRef": "avg_delivery_days"
             }
           ]
         }
@@ -157,7 +157,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'GI\u00c1 TR\u1eca \u0110\u01a0N TB AOV (BRL)'"
+                  "Value": "'TH\u1edcI GIAN GIAO TB (NG\u00c0Y)'"
                 }
               }
             },

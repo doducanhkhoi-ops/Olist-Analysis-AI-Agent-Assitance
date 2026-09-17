@@ -20,15 +20,28 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_fulfillment_quadrants"
+                      "Entity": "fact_bundle_sla_crosstab"
                     }
                   },
-                  "Property": "delivery_quadrant"
+                  "Property": "basket_type"
                 }
               },
-              "queryRef": "fact_fulfillment_quadrants.delivery_quadrant",
-              "nativeQueryRef": "Ph\u00e2n Kh\u00fac SLA",
-              "active": true
+              "queryRef": "fact_bundle_sla_crosstab.basket_type",
+              "nativeQueryRef": "basket_type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_bundle_sla_crosstab"
+                    }
+                  },
+                  "Property": "is_late"
+                }
+              },
+              "queryRef": "fact_bundle_sla_crosstab.is_late",
+              "nativeQueryRef": "is_late"
             },
             {
               "field": {
@@ -37,7 +50,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "fact_fulfillment_quadrants"
+                          "Entity": "fact_bundle_sla_crosstab"
                         }
                       },
                       "Property": "total_orders"
@@ -46,8 +59,8 @@
                   "Function": 0
                 }
               },
-              "queryRef": "Sum(fact_fulfillment_quadrants.total_orders)",
-              "nativeQueryRef": "S\u1ed1 \u0110\u01a1n"
+              "queryRef": "Sum(fact_bundle_sla_crosstab.total_orders)",
+              "nativeQueryRef": "total_orders"
             },
             {
               "field": {
@@ -56,17 +69,17 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "fact_fulfillment_quadrants"
+                          "Entity": "fact_bundle_sla_crosstab"
                         }
                       },
-                      "Property": "total_gmv"
+                      "Property": "avg_delivery_days"
                     }
                   },
                   "Function": 0
                 }
               },
-              "queryRef": "Sum(fact_fulfillment_quadrants.total_gmv)",
-              "nativeQueryRef": "T\u1ed5ng GMV"
+              "queryRef": "Sum(fact_bundle_sla_crosstab.avg_delivery_days)",
+              "nativeQueryRef": "avg_delivery_days"
             },
             {
               "field": {
@@ -75,26 +88,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "fact_fulfillment_quadrants"
-                        }
-                      },
-                      "Property": "aov"
-                    }
-                  },
-                  "Function": 0
-                }
-              },
-              "queryRef": "Sum(fact_fulfillment_quadrants.aov)",
-              "nativeQueryRef": "AOV"
-            },
-            {
-              "field": {
-                "Aggregation": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "fact_fulfillment_quadrants"
+                          "Entity": "fact_bundle_sla_crosstab"
                         }
                       },
                       "Property": "avg_review_score"
@@ -103,8 +97,8 @@
                   "Function": 0
                 }
               },
-              "queryRef": "Sum(fact_fulfillment_quadrants.avg_review_score)",
-              "nativeQueryRef": "Review TB"
+              "queryRef": "Sum(fact_bundle_sla_crosstab.avg_review_score)",
+              "nativeQueryRef": "avg_review_score"
             },
             {
               "field": {
@@ -113,74 +107,17 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "fact_fulfillment_quadrants"
+                          "Entity": "fact_bundle_sla_crosstab"
                         }
                       },
-                      "Property": "one_star_pct"
+                      "Property": "pct_1_star"
                     }
                   },
                   "Function": 0
                 }
               },
-              "queryRef": "Sum(fact_fulfillment_quadrants.one_star_pct)",
-              "nativeQueryRef": "% 1 Sao"
-            },
-            {
-              "field": {
-                "Aggregation": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "fact_fulfillment_quadrants"
-                        }
-                      },
-                      "Property": "avg_seller_handling_days"
-                    }
-                  },
-                  "Function": 0
-                }
-              },
-              "queryRef": "Sum(fact_fulfillment_quadrants.avg_seller_handling_days)",
-              "nativeQueryRef": "Seller X\u1eed L\u00fd"
-            },
-            {
-              "field": {
-                "Aggregation": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "fact_fulfillment_quadrants"
-                        }
-                      },
-                      "Property": "avg_carrier_transit_days"
-                    }
-                  },
-                  "Function": 0
-                }
-              },
-              "queryRef": "Sum(fact_fulfillment_quadrants.avg_carrier_transit_days)",
-              "nativeQueryRef": "Carrier Transit"
-            },
-            {
-              "field": {
-                "Aggregation": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "fact_fulfillment_quadrants"
-                        }
-                      },
-                      "Property": "avg_sla_buffer_days"
-                    }
-                  },
-                  "Function": 0
-                }
-              },
-              "queryRef": "Sum(fact_fulfillment_quadrants.avg_sla_buffer_days)",
-              "nativeQueryRef": "\u0110\u1ec7m SLA (Ng\u00e0y)"
+              "queryRef": "Sum(fact_bundle_sla_crosstab.pct_1_star)",
+              "nativeQueryRef": "pct_1_star"
             }
           ]
         }
@@ -367,42 +304,10 @@
       "title": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'B\u1ea3ng K\u00ea Chi Ti\u1ebft V\u1eadn H\u00e0nh & Kh\u00e1ch H\u00e0ng Gi\u1eefa 4 G\u00f3c Ph\u1ea7n T\u01b0'"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Segoe UI Semibold'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "11D"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#F8FAFC'"
-                    }
-                  }
+                  "Value": "'Ma Tr\u1eadn \u0110\u1ed1i Chi\u1ebfu T\u00e1c \u0110\u1ed9ng Giao \u0110\u00fang H\u1ea1n vs Tr\u1ec5 H\u1ea1n \u0110\u1ebfn \u0110i\u1ec3m Review'"
                 }
               }
             }

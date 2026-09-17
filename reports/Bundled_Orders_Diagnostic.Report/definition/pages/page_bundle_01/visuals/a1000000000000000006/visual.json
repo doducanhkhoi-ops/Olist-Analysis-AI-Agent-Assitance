@@ -1,16 +1,16 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "a1000000000000000007",
+  "name": "a1000000000000000006",
   "position": {
-    "x": 1290,
+    "x": 630,
     "y": 242,
-    "z": 7000,
+    "z": 6000,
     "height": 372,
-    "width": 610,
-    "tabOrder": 7000
+    "width": 640,
+    "tabOrder": 6000
   },
   "visual": {
-    "visualType": "barChart",
+    "visualType": "lineClusteredColumnComboChart",
     "query": {
       "queryState": {
         "Category": {
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_regional_logistics_friction"
+                      "Entity": "fact_bundle_summary"
                     }
                   },
-                  "Property": "state"
+                  "Property": "basket_type"
                 }
               },
-              "queryRef": "fact_regional_logistics_friction.state",
-              "nativeQueryRef": "Ng\u00e0nh H\u00e0ng",
+              "queryRef": "fact_bundle_summary.basket_type",
+              "nativeQueryRef": "Nh\u00f3m K\u1ef3 H\u1ea1n",
               "active": true
             }
           ]
@@ -41,43 +41,43 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "fact_regional_logistics_friction"
+                          "Entity": "fact_bundle_summary"
                         }
                       },
-                      "Property": "carrier_breakdown_pct"
+                      "Property": "avg_delivery_days"
                     }
                   },
                   "Function": 0
                 }
               },
-              "queryRef": "Sum(fact_regional_logistics_friction.carrier_breakdown_pct)",
-              "nativeQueryRef": "Gi\u00e1 Tr\u1ecb \u0110\u01a1n (AOV)"
+              "queryRef": "Sum(fact_bundle_summary.avg_delivery_days)",
+              "nativeQueryRef": "AOV (BRL)"
+            }
+          ]
+        },
+        "Y2": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_bundle_summary"
+                        }
+                      },
+                      "Property": "late_delivery_pct"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(fact_bundle_summary.late_delivery_pct)",
+              "nativeQueryRef": "T\u1ef7 L\u1ec7 1 Sao (%)"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Aggregation": {
-                "Expression": {
-                  "Column": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "fact_top_categories_k10"
-                      }
-                    },
-                    "Property": "aov"
-                  }
-                },
-                "Function": 0
-              }
-            },
-            "direction": "Descending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "objects": {
@@ -110,7 +110,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F8FAFC'"
+                      "Value": "'#94A3B8'"
                     }
                   }
                 }
@@ -155,7 +155,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#94A3B8'"
+                      "Value": "'#38BDF8'"
                     }
                   }
                 }
@@ -175,7 +175,84 @@
             "showAxisTitle": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
+                }
+              }
+            },
+            "titleText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'AOV (BRL)'"
+                }
+              }
+            },
+            "titleColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#38BDF8'"
+                    }
+                  }
+                }
+              }
+            },
+            "secShowAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "secTitleText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'T\u1ef7 L\u1ec7 1 Sao (%)'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "legend": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'TopRight'"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
+            "labelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#94A3B8'"
+                    }
+                  }
                 }
               }
             }
@@ -211,7 +288,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#FBBF24'"
+                      "Value": "'#F8FAFC'"
                     }
                   }
                 }
@@ -223,17 +300,68 @@
       "dataPoint": [
         {
           "properties": {
-            "defaultColor": {
+            "fill": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#FBBF24'"
+                      "Value": "'#38BDF8'"
                     }
                   }
                 }
               }
             }
+          },
+          "selector": {
+            "metadata": "Sum(fact_installments.aov)"
+          }
+        }
+      ],
+      "lineStyles": [
+        {
+          "properties": {
+            "strokeWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "3D"
+                }
+              }
+            },
+            "showMarker": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "markerShape": {
+              "expr": {
+                "Literal": {
+                  "Value": "'circle'"
+                }
+              }
+            },
+            "markerSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            },
+            "markerColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F43F5E'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(fact_installments.pct_1_star)"
           }
         }
       ]
@@ -242,42 +370,10 @@
       "title": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'T\u1ef7 L\u1ec7 B\u01b0u C\u1ee5c L\u00e0m Tr\u1ec5 (Carrier G\u00e3y) Theo Bang Kh\u00e1ch H\u00e0ng (%)'"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Segoe UI Semibold'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "11D"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#F8FAFC'"
-                    }
-                  }
+                  "Value": "'Ngh\u1ecbch L\u00fd Th\u1eddi Gian Giao & T\u1ef7 L\u1ec7 Tr\u1ec5 H\u1ea1n Theo Gi\u1ecf H\u00e0ng'"
                 }
               }
             }
@@ -351,31 +447,50 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "a9f1a8a20d54908b4345",
+        "name": "644da057c01a2d61bc67",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "fact_top_categories_k10"
+                "Entity": "fact_installments"
               }
             },
-            "Property": "category_vn"
+            "Property": "installment_group"
           }
         },
         "type": "Categorical"
       },
       {
-        "name": "4915e979503e060a6b54",
+        "name": "2b8999003e5c251abe58",
         "field": {
           "Aggregation": {
             "Expression": {
               "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "fact_top_categories_k10"
+                    "Entity": "fact_installments"
                   }
                 },
                 "Property": "aov"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "6f48ea11adc4bd7997c7",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_installments"
+                  }
+                },
+                "Property": "pct_1_star"
               }
             },
             "Function": 0

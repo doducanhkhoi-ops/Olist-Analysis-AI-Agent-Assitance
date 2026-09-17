@@ -9,13 +9,13 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_QueryOrder = ["fact_fulfillment_quadrants","fact_regional_logistics_friction","fact_category_seller_overdue","fact_fulfillment_kpi_summary"]
+annotation PBI_QueryOrder = ["fact_bundle_summary","fact_bundle_sla_crosstab","fact_bundle_item_tiers","fact_bundle_seller_tiers"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
-ref table fact_fulfillment_quadrants
-ref table fact_regional_logistics_friction
-ref table fact_category_seller_overdue
-ref table fact_fulfillment_kpi_summary
+ref table fact_bundle_summary
+ref table fact_bundle_sla_crosstab
+ref table fact_bundle_item_tiers
+ref table fact_bundle_seller_tiers
 
 ref cultureInfo vi-VN

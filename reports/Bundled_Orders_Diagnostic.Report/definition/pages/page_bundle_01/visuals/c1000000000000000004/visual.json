@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "c1000000000000000005",
+  "name": "c1000000000000000004",
   "position": {
-    "x": 1540,
+    "x": 1160,
     "y": 112,
-    "z": 4400,
+    "z": 4300,
     "height": 114,
     "width": 360,
-    "tabOrder": 4400
+    "tabOrder": 4300
   },
   "visual": {
     "visualType": "cardVisual",
@@ -22,17 +22,17 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "fact_fulfillment_quadrants"
+                          "Entity": "fact_bundle_summary"
                         }
                       },
-                      "Property": "one_star_pct"
+                      "Property": "avg_review_score"
                     }
                   },
                   "Function": 4
                 }
               },
-              "queryRef": "Sum(fact_fulfillment_quadrants.one_star_pct)",
-              "nativeQueryRef": "one_star_pct"
+              "queryRef": "Sum(fact_bundle_summary.avg_review_score)",
+              "nativeQueryRef": "avg_review_score"
             }
           ]
         }
@@ -84,7 +84,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#FB923C'"
+                      "Value": "'#F43F5E'"
                     }
                   }
                 }
@@ -125,7 +125,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#EF4444'"
+                      "Value": "'#EC4899'"
                     }
                   }
                 }
@@ -157,7 +157,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'T\u1ef6 L\u1ec6 KH\u00c1CH CH\u1ea4M 1 SAO (%)'"
+                  "Value": "'\u0110I\u1ec2M \u0110\u00c1NH GI\u00c1 REVIEW TB'"
                 }
               }
             },
@@ -291,5 +291,28 @@
         }
       ]
     }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "43fe72d05aeb535dea9d",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_installments"
+                  }
+                },
+                "Property": "pct_1_star"
+              }
+            },
+            "Function": 4
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }
