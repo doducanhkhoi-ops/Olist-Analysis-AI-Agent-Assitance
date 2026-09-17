@@ -1,0 +1,50 @@
+table fact_fulfillment_kpi_summary
+	lineageTag: cb170c20-b43a-4b30-8192-c04fa264681d
+
+	column metric_name
+		dataType: string
+		lineageTag: 52363a71-afed-4507-ba06-c05d7636b036
+		summarizeBy: none
+		sourceColumn: metric_name
+		annotation SummarizationSetBy = Automatic
+
+	column metric_value
+		dataType: double
+		lineageTag: ae5c47be-f59f-4366-9530-305b7559409d
+		summarizeBy: sum
+		sourceColumn: metric_value
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unit
+		dataType: string
+		lineageTag: 0ddb09be-56f6-436f-991d-4246c0dc0742
+		summarizeBy: none
+		sourceColumn: unit
+		annotation SummarizationSetBy = Automatic
+
+	column formatted
+		dataType: string
+		lineageTag: b9d39526-c84d-4e2d-9791-f61110f09cbe
+		summarizeBy: none
+		sourceColumn: formatted
+		annotation SummarizationSetBy = Automatic
+
+	column note
+		dataType: string
+		lineageTag: dc65700f-ac5b-464f-8c48-17b31fd63eab
+		summarizeBy: none
+		sourceColumn: note
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_fulfillment_kpi_summary = m
+		mode: import
+		source =
+				let
+				    Nguon = Csv.Document(File.Contents("c:\\Users\\ASUS\\Documents\\Năm III\\CSDL\\data_bi\\fact_fulfillment_kpi_summary.csv"),[Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tieu de Duoc Tang cap" = Table.PromoteHeaders(Nguon, [PromoteAllScalars=true]),
+				    #"Thay doi Loai" = Table.TransformColumnTypes(#"Tieu de Duoc Tang cap",{{"metric_name", type text}, {"metric_value", type number}, {"unit", type text}, {"formatted", type text}, {"note", type text}})
+				in
+				    #"Thay doi Loai"
+
+	annotation PBI_ResultType = Table

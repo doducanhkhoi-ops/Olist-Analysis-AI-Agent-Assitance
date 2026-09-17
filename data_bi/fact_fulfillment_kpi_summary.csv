@@ -1,0 +1,7 @@
+﻿metric_name,metric_value,unit,formatted,note
+Tổng đơn hàng hoàn thành (Delivered),96999.0,đơn,"96,999 đơn",Tập dữ liệu hoàn tất giao nhận
+Tỷ trọng Carrier cứu đơn kịp thời (Q2),79.26,%,79.26%,"6,944 / 8,761 đơn seller ngâm trễ"
+Đơn bị Carrier làm gãy dù Seller đúng (Q3),4745.0,đơn,"4,745 đơn",Chiếm 4.89% đơn toàn sàn
+Điểm Review khi đúng hạn (Q1/Q2),4.29,sao,4.29 sao,Hài lòng tuyệt đối
+Điểm Review khi vỡ cam kết (Q3/Q4),2.27,sao,2.27 sao,"Sụp đổ -2.02 sao, 52.5% 1-sao"
+Tổng GMV bị hủy hoại danh tiếng (Q3+Q4),989777.56,BRL,R$ 989.8K,"6,562 đơn rơi vào vực thẳm review"

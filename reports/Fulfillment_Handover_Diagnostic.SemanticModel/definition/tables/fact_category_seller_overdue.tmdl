@@ -1,0 +1,53 @@
+table fact_category_seller_overdue
+	lineageTag: 1003073d-cde5-443c-871b-8c88cf46f3f9
+
+	column category_name
+		dataType: string
+		lineageTag: 86cd326a-d0fe-47ab-a1b9-d61b42ec74b9
+		summarizeBy: none
+		sourceColumn: category_name
+		annotation SummarizationSetBy = Automatic
+
+	column total_orders
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 144ae1ee-ec21-414a-a6de-8c514619a45a
+		summarizeBy: sum
+		sourceColumn: total_orders
+		annotation SummarizationSetBy = Automatic
+
+	column seller_overdue_pct
+		dataType: double
+		lineageTag: f33113a7-3564-4cf4-b806-551b798a6e3f
+		summarizeBy: sum
+		sourceColumn: seller_overdue_pct
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_seller_handling_days
+		dataType: double
+		lineageTag: 98bef74f-df1b-4716-ac4d-c5f806afa97a
+		summarizeBy: sum
+		sourceColumn: avg_seller_handling_days
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_review_score
+		dataType: double
+		lineageTag: f3d20af9-eb8f-435c-8183-0813cafeec67
+		summarizeBy: sum
+		sourceColumn: avg_review_score
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_category_seller_overdue = m
+		mode: import
+		source =
+				let
+				    Nguon = Csv.Document(File.Contents("c:\\Users\\ASUS\\Documents\\Năm III\\CSDL\\data_bi\\fact_category_seller_overdue.csv"),[Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tieu de Duoc Tang cap" = Table.PromoteHeaders(Nguon, [PromoteAllScalars=true]),
+				    #"Thay doi Loai" = Table.TransformColumnTypes(#"Tieu de Duoc Tang cap",{{"category_name", type text}, {"total_orders", Int64.Type}, {"seller_overdue_pct", type number}, {"avg_seller_handling_days", type number}, {"avg_review_score", type number}})
+				in
+				    #"Thay doi Loai"
+
+	annotation PBI_ResultType = Table

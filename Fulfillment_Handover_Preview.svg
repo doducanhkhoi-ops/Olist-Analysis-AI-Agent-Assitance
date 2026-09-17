@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" style="background:#070B14; font-family:'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <linearGradient id="blueGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="roseGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e11d48"/>
+      <stop offset="100%" stop-color="#f43f5e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- HEADER -->
+  <rect x="20" y="16" width="1240" height="74" rx="12" fill="#0E1526" stroke="#1E2D4A" stroke-width="1.2" filter="url(#shadow)"/>
+  <rect x="36" y="32" width="130" height="22" rx="5" fill="#38bdf8" fill-opacity="0.15" stroke="#38bdf8" stroke-width="1"/>
+  <text x="101" y="47" fill="#38bdf8" font-size="11" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', monospace">LOGISTICS AUDIT</text>
+  <text x="180" y="48" fill="#ffffff" font-size="17" font-weight="800">GIẢI PHẪU ĐIỂM NGHẼN BÀN GIAO &amp; NGHỊCH LÝ CARRIER CỨU ĐƠN</text>
+  <text x="180" y="68" fill="#94a3b8" font-size="12">Phân Tích Độc Quyền: Seller Handling Latency vs Carrier Transit | CSDL: olist_raw (96,999 Đơn)</text>
+
+  <!-- SLA CHAIN PILL -->
+  <rect x="910" y="30" width="330" height="46" rx="8" fill="#141E34" stroke="#1E2D4A" stroke-width="1"/>
+  <text x="925" y="48" fill="#94a3b8" font-size="10.5" font-weight="600">CHUỖI QUAN HỆ BẢNG DỮ LIỆU:</text>
+  <text x="925" y="66" fill="#34d399" font-size="11.5" font-family="'JetBrains Mono', monospace" font-weight="600">orders ➔ order_items ➔ reviews</text>
+
+  <!-- KPI CARDS -->
+  <!-- Card 1 -->
+  <rect x="20" y="105" width="232" height="88" rx="10" fill="#0E1526" stroke="#1E2D4A" stroke-width="1.2" filter="url(#shadow)"/>
+  <rect x="20" y="105" width="4" height="88" rx="2" fill="#38bdf8"/>
+  <text x="36" y="130" fill="#94a3b8" font-size="11" font-weight="700">TỔNG ĐƠN DELIVERED</text>
+  <text x="36" y="162" fill="#ffffff" font-size="24" font-weight="800" font-family="'JetBrains Mono', monospace">96,999</text>
+  <text x="36" y="180" fill="#64748b" font-size="10.5">100% hoàn thành</text>
+
+  <!-- Card 2 -->
+  <rect x="272" y="105" width="232" height="88" rx="10" fill="#0E1526" stroke="#1E2D4A" stroke-width="1.2" filter="url(#shadow)"/>
+  <rect x="272" y="105" width="4" height="88" rx="2" fill="#10b981"/>
+  <text x="288" y="130" fill="#94a3b8" font-size="11" font-weight="700">CARRIER CỨU ĐƠN (Q2)</text>
+  <text x="288" y="162" fill="#34d399" font-size="24" font-weight="800" font-family="'JetBrains Mono', monospace">79.26%</text>
+  <text x="288" y="180" fill="#64748b" font-size="10.5">6,944 đơn seller ngâm trễ</text>
+
+  <!-- Card 3 -->
+  <rect x="524" y="105" width="232" height="88" rx="10" fill="#0E1526" stroke="#1E2D4A" stroke-width="1.2" filter="url(#shadow)"/>
+  <rect x="524" y="105" width="4" height="88" rx="2" fill="#f43f5e"/>
+  <text x="540" y="130" fill="#94a3b8" font-size="11" font-weight="700">ĐƠN BỊ CARRIER LÀM TRỄ (Q3)</text>
+  <text x="540" y="162" fill="#fb7185" font-size="24" font-weight="800" font-family="'JetBrains Mono', monospace">4,745</text>
+  <text x="540" y="180" fill="#64748b" font-size="10.5">Seller gửi đúng hạn 100%</text>
+
+  <!-- Card 4 -->
+  <rect x="776" y="105" width="232" height="88" rx="10" fill="#0E1526" stroke="#1E2D4A" stroke-width="1.2" filter="url(#shadow)"/>
+  <rect x="776" y="105" width="4" height="88" rx="2" fill="#fbbf24"/>
+  <text x="792" y="130" fill="#94a3b8" font-size="11" font-weight="700">REVIEW SCORE KHI GÃY HẸN</text>
+  <text x="792" y="162" fill="#fbbf24" font-size="24" font-weight="800" font-family="'JetBrains Mono', monospace">2.27 ★</text>
+  <text x="792" y="180" fill="#64748b" font-size="10.5">Rơi -2.04 sao so với chuẩn</text>
+
+  <!-- Card 5 -->
+  <rect x="1028" y="105" width="232" height="88" rx="10" fill="#0E1526" stroke="#1E2D4A" stroke-width="1.2" filter="url(#shadow)"/>
+  <rect x="1028" y="105" width="4" height="88" rx="2" fill="#a855f7"/>
+  <text x="1044" y="130" fill="#94a3b8" font-size="11" font-weight="700">TỔNG GMV BỊ HẠI UY TÍN</text>
+  <text x="1044" y="162" fill="#c084fc" font-size="24" font-weight="800" font-family="'JetBrains Mono', monospace">R$ 989.8K</text>
+  <text x="1044" y="180" fill="#64748b" font-size="10.5">6,562 đơn Q3 &amp; Q4</text>
+
+  <!-- MAIN VISUAL 1: QUADRANTS TABLE & MATRIX (LEFT) -->
+  <rect x="20" y="210" width="650" height="490" rx="12" fill="#0E1526" stroke="#1E2D4A" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="40" y="240" fill="#ffffff" font-size="14.5" font-weight="700">MA TRẬN 4 GÓC PHẦN TƯ BÀN GIAO &amp; VẬN TẢI</text>
+  <text x="40" y="258" fill="#94a3b8" font-size="11.5">Đối chiếu Seller Dispatch vs Carrier Transit vs Điểm Đánh Giá Khách Hàng</text>
+
+  <!-- Quadrant Rows -->
+  <!-- Q1 -->
+  <rect x="36" y="275" width="618" height="90" rx="8" fill="#141E34" stroke="#1E2D4A"/>
+  <rect x="36" y="275" width="5" height="90" rx="2" fill="#38bdf8"/>
+  <text x="54" y="300" fill="#38bdf8" font-size="13" font-weight="800">Q1: Chuẩn SLA (Seller Đúng Hạn, Carrier Đúng Hạn)</text>
+  <text x="54" y="322" fill="#94a3b8" font-size="11.5">Số đơn: <tspan fill="#FFF" font-weight="700">83,493 (86.08%)</tspan> | GMV: <tspan fill="#FFF">R$ 11.21M</tspan> | AOV: <tspan fill="#FFF">R$ 134.2</tspan></text>
+  <text x="54" y="342" fill="#94a3b8" font-size="11.5">Seller chuẩn bị: <tspan fill="#34d399">2.5 ngày</tspan> | Transit: <tspan fill="#34d399">8.0 ngày</tspan> | Đệm SLA: <tspan fill="#34d399">+13.1 ngày</tspan></text>
+  <text x="54" y="358" fill="#34d399" font-size="12" font-weight="700">Review Score: 4.31 ★ (1-Sao: 6.32% | 5-Sao: 62.57%)</text>
+
+  <!-- Q2 -->
+  <rect x="36" y="375" width="618" height="90" rx="8" fill="rgba(16, 185, 129, 0.08)" stroke="rgba(16, 185, 129, 0.3)"/>
+  <rect x="36" y="375" width="5" height="90" rx="2" fill="#10b981"/>
+  <text x="54" y="400" fill="#34d399" font-size="13" font-weight="800">Q2: Carrier Gánh / Cứu Nguy (Seller Trễ, Carrier Tốc Hành)</text>
+  <text x="54" y="422" fill="#94a3b8" font-size="11.5">Số đơn: <tspan fill="#34d399" font-weight="700">6,944 (7.16%)</tspan> | GMV: <tspan fill="#FFF">R$ 1.08M</tspan> | AOV: <tspan fill="#FFF">R$ 156.0</tspan></text>
+  <text x="54" y="442" fill="#94a3b8" font-size="11.5">Seller ngâm đơn: <tspan fill="#f43f5e">8.6 ngày (Gấp 3.4x!)</tspan> | Transit: <tspan fill="#34d399">7.6 ngày</tspan> | Đệm SLA: <tspan fill="#34d399">+9.4 ngày</tspan></text>
+  <text x="54" y="458" fill="#38bdf8" font-size="12" font-weight="700">Review Score: 4.07 ★ (Khách vẫn rất hài lòng vì đến trước hạn!)</text>
+
+  <!-- Q3 -->
+  <rect x="36" y="475" width="618" height="90" rx="8" fill="rgba(244, 63, 94, 0.08)" stroke="rgba(244, 63, 94, 0.3)"/>
+  <rect x="36" y="475" width="5" height="90" rx="2" fill="#f43f5e"/>
+  <text x="54" y="500" fill="#fb7185" font-size="13" font-weight="800">Q3: Carrier Gãy / Vận Tải Nghẽn (Seller Đúng, Carrier Trễ)</text>
+  <text x="54" y="522" fill="#94a3b8" font-size="11.5">Số đơn: <tspan fill="#fb7185" font-weight="700">4,745 (4.89%)</tspan> | GMV: <tspan fill="#FFF">R$ 664.6K</tspan> | AOV: <tspan fill="#FFF">R$ 140.1</tspan></text>
+  <text x="54" y="542" fill="#94a3b8" font-size="11.5">Seller giao cực nhanh: <tspan fill="#34d399">3.0 ngày</tspan> | Transit: <tspan fill="#f43f5e">31.6 ngày (Gấp 4x!)</tspan> | Đệm SLA: <tspan fill="#f43f5e">-11.6 ngày</tspan></text>
+  <text x="54" y="558" fill="#f43f5e" font-size="12" font-weight="700">Review Score: 2.27 ★ (1-Sao vọt lên 52.39% - Seller bị phạt oan!)</text>
+
+  <!-- Q4 -->
+  <rect x="36" y="575" width="618" height="90" rx="8" fill="rgba(239, 68, 68, 0.12)" stroke="rgba(239, 68, 68, 0.4)"/>
+  <rect x="36" y="575" width="5" height="90" rx="2" fill="#ef4444"/>
+  <text x="54" y="600" fill="#f87171" font-size="13" font-weight="800">Q4: Thảm Họa Kép (Seller Ngâm Đơn VÀ Carrier Giao Trễ)</text>
+  <text x="54" y="622" fill="#94a3b8" font-size="11.5">Số đơn: <tspan fill="#f87171" font-weight="700">1,817 (1.87%)</tspan> | GMV: <tspan fill="#FFF">R$ 325.1K</tspan> | AOV: <tspan fill="#FFF">R$ 179.0</tspan></text>
+  <text x="54" y="642" fill="#94a3b8" font-size="11.5">Seller ngâm đơn: <tspan fill="#f43f5e">13.9 ngày</tspan> | Transit: <tspan fill="#f43f5e">18.3 ngày</tspan> | Trễ thực tế: <tspan fill="#f43f5e">-10.5 ngày</tspan></text>
+  <text x="54" y="658" fill="#ef4444" font-size="12" font-weight="700">Review Score: 2.27 ★ (Đáy đồng nhất: 52.72% chấm 1 sao!)</text>
+
+  <!-- RIGHT SECTION (REGIONAL & CATEGORY BREAKDOWN) -->
+  <rect x="686" y="210" width="574" height="235" rx="12" fill="#0E1526" stroke="#1E2D4A" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="706" y="238" fill="#ffffff" font-size="14" font-weight="700">TOP BANG CÓ TỶ LỆ CARRIER GÃY CAO NHẤT (Q3)</text>
+  <text x="706" y="254" fill="#94a3b8" font-size="11">Rủi ro đứt gãy tuyến vận chuyển liên bang Đông Bắc vs Đông Nam</text>
+
+  <!-- Bars for states -->
+  <text x="706" y="280" fill="#E2E8F0" font-size="11.5">Ceará (CE)</text>
+  <rect x="830" y="268" width="310" height="15" rx="4" fill="rgba(255,255,255,0.05)"/>
+  <rect x="830" y="268" width="245" height="15" rx="4" fill="#f43f5e"/>
+  <text x="1085" y="280" fill="#fb7185" font-size="11" font-weight="700">11.62% (40.6 d)</text>
+
+  <text x="706" y="308" fill="#E2E8F0" font-size="11.5">Bahia (BA)</text>
+  <rect x="830" y="296" width="310" height="15" rx="4" fill="rgba(255,255,255,0.05)"/>
+  <rect x="830" y="296" width="218" height="15" rx="4" fill="#f43f5e"/>
+  <text x="1058" y="308" fill="#fb7185" font-size="11" font-weight="700">10.33% (36.0 d)</text>
+
+  <text x="706" y="336" fill="#E2E8F0" font-size="11.5">Rio de Janeiro (RJ)</text>
+  <rect x="830" y="324" width="310" height="15" rx="4" fill="rgba(255,255,255,0.05)"/>
+  <rect x="830" y="324" width="200" height="15" rx="4" fill="#f43f5e"/>
+  <text x="1040" y="336" fill="#fb7185" font-size="11" font-weight="700">9.45% (1,174 đơn!)</text>
+
+  <text x="706" y="364" fill="#E2E8F0" font-size="11.5">Espírito Santo (ES)</text>
+  <rect x="830" y="352" width="310" height="15" rx="4" fill="rgba(255,255,255,0.05)"/>
+  <rect x="830" y="352" width="179" height="15" rx="4" fill="#38bdf8"/>
+  <text x="1019" y="364" fill="#38bdf8" font-size="11" font-weight="700">8.48% (30.8 d)</text>
+
+  <text x="706" y="392" fill="#E2E8F0" font-size="11.5">São Paulo (SP)</text>
+  <rect x="830" y="380" width="310" height="15" rx="4" fill="rgba(255,255,255,0.05)"/>
+  <rect x="830" y="380" width="56" height="15" rx="4" fill="#10b981"/>
+  <text x="896" y="392" fill="#34d399" font-size="11" font-weight="700">2.65% (Tối ưu SLA)</text>
+
+  <text x="706" y="426" fill="#fbbf24" font-size="11" font-style="italic">⚡ Cảnh báo: CE và BA có transit thực tế khi trễ vượt 40 ngày do thiếu hub chia chọn!</text>
+
+  <!-- BOTTOM RIGHT (CATEGORY SELLER LAG) -->
+  <rect x="686" y="460" width="574" height="240" rx="12" fill="#0E1526" stroke="#1E2D4A" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="706" y="488" fill="#ffffff" font-size="14" font-weight="700">ĐIỂM NGHẼN SELLER: HÀNG CỒNG KỀNH &amp; THỜI GIAN CHUẨN BỊ</text>
+  <text x="706" y="504" fill="#94a3b8" font-size="11">Sự bất cập khi áp cùng một hạn chót giao hàng tĩnh cho mọi loại hàng</text>
+
+  <!-- Category items -->
+  <text x="706" y="534" fill="#f87171" font-weight="700" font-size="12">1. Office Furniture (Nội thất văn phòng):</text>
+  <text x="706" y="552" fill="#94a3b8" font-size="11.5">Tỷ lệ seller trễ hạn: <tspan fill="#f43f5e" font-weight="700">28.25%</tspan> | TG chuẩn bị TB: <tspan fill="#f43f5e" font-weight="700">10.8 ngày</tspan> | Review: <tspan fill="#fbbf24">3.52 ★</tspan></text>
+
+  <text x="706" y="582" fill="#E2E8F0" font-weight="600" font-size="12">2. Consoles &amp; Games / Furniture Decor:</text>
+  <text x="706" y="600" fill="#94a3b8" font-size="11.5">Tỷ lệ seller trễ: <tspan fill="#FFF">12.0% - 13.0%</tspan> | TG chuẩn bị: <tspan fill="#FFF">3.7 - 3.9 ngày</tspan> | Review: <tspan fill="#FFF">3.95 - 4.14 ★</tspan></text>
+
+  <text x="706" y="630" fill="#E2E8F0" font-weight="600" font-size="12">3. Consumer Goods (Pet shop, Stationery, Housewares):</text>
+  <text x="706" y="648" fill="#94a3b8" font-size="11.5">Tỷ lệ seller trễ: <tspan fill="#34d399">9.5% - 11.4%</tspan> | TG chuẩn bị: <tspan fill="#34d399">3.1 - 3.3 ngày</tspan> | Review: <tspan fill="#34d399">4.11 - 4.24 ★</tspan></text>
+
+  <rect x="706" y="662" width="534" height="26" rx="4" fill="rgba(245, 158, 11, 0.1)" stroke="rgba(245, 158, 11, 0.3)"/>
+  <text x="716" y="679" fill="#fbbf24" font-size="11" font-weight="600">Đề xuất: Cấp Dynamic Shipping Limit: +5 ngày cho hàng cồng kềnh; 48h cho hàng tiêu dùng!</text>
+
+</svg>

@@ -5,6 +5,8 @@ OLIST.zip
 *.zip
 *.tar.gz
 *.csv
+!data_bi/*.csv
+
 
 # Installers & Executables
 *.msi
@@ -16,6 +18,7 @@ mysql-8.0.42-winx64/
 *.pdf
 
 # Python Cache & Environments
+*.bak
 __pycache__/
 *.pyc
 *.pyo

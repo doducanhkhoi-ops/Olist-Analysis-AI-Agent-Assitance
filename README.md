@@ -1,176 +1,152 @@
 # Olist E-Commerce Diagnostic & Strategic Analytics Engine
-> **Dự án Nghiên cứu & Phân tích Dữ liệu Thương mại Điện tử Olist (Brazil)**  
-> **Bộ môn:** Cơ sở dữ liệu (TINH313) · Đại học Ngoại thương (FTU) · Nhóm 6  
-> **Phương pháp:** The Diagnostic Analyst Mindset (Luồng tư duy chẩn đoán 6 bước, Analysis-First, Anti-Cringe & Zero AI Watermark)  
-> **Mô hình triển khai:** Cục bộ (Local Machine Execution) · Chia sẻ kiến trúc mã nguồn mở (Architecture Showcase)
+
+Hệ thống chẩn đoán dữ liệu thương mại điện tử chuyên sâu (Enterprise Diagnostic Analytics) khai thác trực tiếp từ cơ sở dữ liệu quy mô lớn của sàn thương mại điện tử Olist (Brazil). Dự án tập trung vào việc bóc tách các điểm nghẽn chuỗi cung ứng, giải mã các nghịch lý vận hành và tự động hóa quy trình phân tích thành bộ tứ sản phẩm bàn giao: **Báo cáo Chẩn đoán (Chat), Sổ Báo cáo Tài chính/Vận hành (Excel), Dashboard Tương tác Đa tầng (HTML) và Mô hình Phân tích Tự động Chuẩn Microsoft Fabric (Power BI PBIP)**.
 
 ---
 
-## 📌 1. Mục Đích Kho Lưu Trữ
-
-Kho lưu trữ được thiết kế nhằm chia sẻ cấu trúc mã nguồn, tư duy kỹ thuật và cơ chế vận hành của một hệ thống chẩn đoán dữ liệu thương mại điện tử chuyên sâu. Toàn bộ mã nguồn tập trung vào:
-1. **Khai thác dữ liệu thực chứng:** Dựa trên CSDL sàn thương mại điện tử Olist (`olist_raw`) với quy mô hơn 100.000 đơn hàng thực tế tại Brazil (2016–2018).
-2. **Động cơ phân tích tự động (`strategic_report_flow.py`):** Tự động truy vấn SQL đa chiều, đo lường các nghịch lý kinh doanh, tính toán KPI, render báo cáo HTML và gửi qua Gmail SMTP.
-3. **Báo cáo Dashboard HTML tương tác sâu (Bespoke Interactive HTML Dashboards):** Trực quan hóa dữ liệu độc lập với khả năng lọc 2 chiều giữa Slicer và Biểu đồ, đào sâu bản chất vấn đề thay vì dừng lại ở thống kê mô tả.
-
----
-
-## 🗂️ 2. Cấu Trúc Mã Nguồn Chuẩn Hóa
+## 🧭 Kiến Trúc Hệ Thống (System Architecture)
 
 ```text
-├── reports/
-│   ├── payment_financing_diagnostic.html # Dashboard tương tác: Ma trận thanh toán & bẫy trả góp 10 kỳ
-│   ├── year_end_logistics_diagnostic.html# Dashboard tương tác: Logistics & đứt gãy mùa cao điểm
-│   └── Olist_Executive_Strategic_Report.html # Báo cáo điều hành tổng thể
-├── .env.example                         # File mẫu tham số kết nối MySQL & Gmail SMTP
-├── .gitignore                           # Danh mục loại trừ dữ liệu nặng (>100MB), installer và cache
-├── requirements.txt                     # Danh mục thư viện Python tối giản
-├── check_db_connection.py               # Script kiểm tra kết nối CSDL và đối soát số dòng các bảng
-├── strategic_report_flow.py             # Động cơ phân tích tự động trung tâm (Core Engine)
-├── AnalyticFlow.md                      # Chuẩn tư duy phân tích chẩn đoán 6 bước
-├── GEMINI.md                            # Quy chuẩn chất lượng hiển thị và triệt tiêu AI watermark
-└── README.md                            # Tài liệu thuyết minh kiến trúc và hướng dẫn cài đặt
+[CSDL Thực Chứng: MySQL olist_raw (99,441 Đơn)]
+                      │
+                      ▼
+[Python Diagnostic Engine: generate_handover_data.py]
+  (Đo lường độ lệch SLA, gộp trước - JOIN sau, chống fan-out)
+                      │
+        ┌─────────────┼─────────────────────────┐
+        ▼             ▼                         ▼
+[Data Mart CSV]  [Sổ Báo Cáo Excel]     [Paginated HTML Cockpit]
+  (Thư mục       (Olist_Fulfillment_     (Olist_Fulfillment_
+   data_bi/)      Handover_Analysis.      Handover_Cockpit.html)
+        │         xlsx - 5 Sheet)        (Chart.js, Slicers, UI/UX)
+        ▼
+[Mô Hình Power BI PBIP]
+  (PBIR + TMDL, Schema 2.9.0, Theme Midnight Navy)
+        │
+        ▼
+[CLI Pre-flight Validation: powerbi-report-author]
+  (Bắt buộc kiểm định: 0 Error, 0 Warning)
 ```
-
-### Quy ước quản lý tệp tin (File Management):
-* **Tệp BẮT BUỘC có trên GitHub:** 7 thành phần cấu trúc ở trên (Mã nguồn, script kiểm thử, tài liệu phân tích và dashboard mẫu).
-* **Tệp ĐÃ LOẠI TRỪ khỏi GitHub (`.gitignore`):**
-  - `olist_dump.sql` (159 MB) & `OLIST.zip` (44 MB): GitHub từ chối tệp tin vượt quá 100 MB. Người dùng nạp dữ liệu từ file dump cục bộ vào MySQL cá nhân.
-  - `.env`: Chứa mật khẩu máy chủ và mật khẩu ứng dụng Gmail của cá nhân.
-  - Bộ cài đặt `.msi`, sách giáo trình PDF, thư mục `__pycache__/`, môi trường ảo `venv/` và các tệp CSV xuất bản tạm thời (`olist_strategic_*.csv`).
 
 ---
 
-## ⚙️ 3. Cơ Chế Vận Hành Của Động Cơ Phân Tích (`strategic_report_flow.py`)
+## 🎯 Chuyên Đề Tiêu Biểu: Điểm Nghẽn Bàn Giao & Nghịch Lý Carrier Cứu Đơn
+*(The Fulfillment Handover Bottleneck & The Carrier Rescue Paradox)*
 
-Hệ thống hoạt động theo mô hình xoay vòng trạng thái khép kín (State-based Diagnostic Loop):
+### 1. Ma Trận 4 Phân Khúc Bàn Giao Thực Chứng (96,999 Đơn Hàng Delivered)
 
-```text
-[Local MySQL Database: olist_raw]
-            │
-            ▼
-[Query Dispatcher: 6 Chuyên Đề Chiến Lược]
-            │
-            ▼
-[Data-Driven Heuristics / Gemini AI Engine]
- (Phát hiện nghịch lý, đo lường độ lệch, truy tìm căn nguyên)
-            │
-            ▼
-[HTML Dashboard Builder] ──► [CSV Exporter]
-            │
-            ▼
-[Gmail SMTP Dispatcher] ──► Hộp thư Giám đốc Chiến lược
-```
+| Phân Khúc Bàn Giao | Quy Mô Đơn | Tỷ Trọng | Doanh Thu (BRL) | AOV (BRL) | Điểm Review | % 1-Sao | TG Seller Chuẩn Bị | TG Carrier Transit | Đệm SLA Còn Lại |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Q1: Chuẩn SLA** *(Seller đúng, Carrier kịp)* | 83,493 | 86.08% | R$ 11,205,605 | R$ 134.21 | **4.31 ★** | 6.32% | 2.54 ngày | 7.99 ngày | **+13.08 ngày** |
+| **Q2: Carrier Gánh** *(Seller trễ, Carrier cứu)* | 6,944 | 7.16% | R$ 1,083,205 | R$ 155.99 | **4.07 ★** | 9.91% | **8.60 ngày** | **7.62 ngày** | **+9.36 ngày** |
+| **Q3: Carrier Gãy** *(Seller đúng, Carrier trễ)* | 4,745 | 4.89% | R$ 664,632 | R$ 140.07 | **2.27 ★** | **52.39%** | 3.03 ngày | **31.56 ngày** | **-11.58 ngày** |
+| **Q4: Thảm Họa Kép** *(Seller trễ, Carrier trễ)* | 1,817 | 1.87% | R$ 325,145 | R$ 178.95 | **2.27 ★** | **52.72%** | **13.86 ngày** | **18.33 ngày** | **-10.53 ngày** |
 
-### Sáu Chuyên Đề Chiến Lược Được Tích Hợp:
-1. **`rfm` (Vòng đời & Phân khúc khách hàng):** Bóc tách 11 phân khúc RFM, định vị tỷ lệ khách hàng có nguy cơ rời bỏ (*About to Sleep*, *Hibernating*, *Lost* chiếm trên 60%) và đo lường tỷ lệ mua lại thực tế (*Repeat Purchase Rate* cực thấp ~3%).
-2. **`seller` (Ma trận năng lực người bán):** Phân tích tương quan Volume vs Value giữa Seller Đa vùng (*Multi-region*) và Đơn vùng (*Single-region*); chỉ ra nguy cơ tập trung doanh thu khi 20% seller gánh 80% GMV toàn sàn.
-3. **`basket` (Hành vi giỏ hàng & Nghịch lý Multi-seller):** Chứng minh nghịch lý: đơn hàng gồm nhiều shop khác nhau (*Multi-seller*) có AOV cao hơn +62.3% và tỷ lệ giao trễ thấp hơn đơn 1 shop (1.41% vs 8.20%).
-4. **`category` (Sức khỏe ngành hàng & Danh mục đuôi dài):** Sàng lọc danh mục có nguy cơ bị gỡ bỏ theo bộ tiêu chuẩn 3/3 (Doanh số thấp, Đánh giá dưới 3.5 sao, Tỷ lệ hủy/hoàn cao).
-5. **`logistics` (Vận hành giao vận theo địa lý):** Đo lường SLA giao trễ, độ lệch giữa ngày hẹn ước tính và thực tế nhận hàng, bóc tách gánh nặng chi phí vận chuyển tại các bang Đông Bắc và miền Bắc Brazil.
-6. **`payment` (Cơ cấu thanh toán & Đòn bẩy tài chính):** Mổ xẻ hiện tượng trả góp dài hạn (>6 đến 10 kỳ) giúp nhân đôi AOV nhưng gia tăng áp lực thanh khoản và rủi ro gián đoạn giao hàng.
+### 2. Hai Nghịch Lý Cốt Lõi Được Phát Hiện
+1. **Bẫy Dung Túng Người Bán (The Tolerated Laggard Trap):** Có tới **79.26% số đơn hàng người bán ngâm trễ hạn (6,944 đơn Q2) được đơn vị vận chuyển chạy nước rút giao trong 7.62 ngày** để bù giờ cho người bán. Khách hàng vẫn chấm 4.07 sao vì nhận trước ngày cam kết, tạo tâm lý chủ quan cho người bán và biến thành khủng hoảng giao trễ vào mùa cao điểm Black Friday.
+2. **Cơ Chế Phạt Nhị Phân & Đáy Review Đồng Nhất:** Dù lỗi trễ 100% do bưu cục trong khi người bán gửi cực nhanh trong 3 ngày (Q3) hay cả người bán lẫn bưu cục cùng trễ (Q4), **điểm review của khách hàng đều chạm đáy ở mức chính xác 2.27 sao và tỷ lệ 1-sao chạm 52.4%**. Khách hàng trừng phạt nhị phân theo ngày hứa trên ứng dụng, khiến người bán chuẩn mực bị phạt oan điểm hiển thị.
 
 ---
 
-## 🚀 4. Hướng Dẫn Cài Đặt & Vận Hành Cục Bộ (Local Machine)
+## 🚀 Hướng Dẫn Thực Thi Quy Trình Phân Tích (Step-by-Step Execution)
 
-### Bước 1: Khởi Tạo Cơ Sở Dữ Liệu `olist_raw` Trên MySQL Local
-1. Mở MySQL Workbench hoặc Command Prompt/PowerShell.
-2. Tạo database và nạp dữ liệu từ file dump cục bộ:
-   ```bash
-   # Tạo database với bảng mã UTF-8 đầy đủ
-   mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS olist_raw CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-
-   # Nạp dữ liệu (Yêu cầu file olist_dump.sql có sẵn trong thư mục máy tính)
-   mysql -u root -p olist_raw < olist_dump.sql
-   ```
-
-### Bước 2: Chuẩn Bị Môi Trường Python
-Chạy môi trường Python (khuyến nghị bản 3.10 – 3.12) và cài đặt gói kết nối:
-```bash
-pip install -r requirements.txt
-```
-
-### Bước 3: Cấu Hình Tệp Môi Trường (`.env`)
-Sao chép `.env.example` thành `.env` tại thư mục gốc và điền thông tin máy chủ MySQL cục bộ:
-```ini
-# Cấu hình kết nối MySQL Localhost
-DB_HOST=localhost
-DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=Mật_khẩu_MySQL_của_bạn
-DB_NAME=olist_raw
-
-# Cấu hình gửi Email báo cáo (Tùy chọn nếu muốn nhận email thực tế)
-GMAIL_USER=your_email@gmail.com
-GMAIL_APP_PASSWORD=xxxx xxxx xxxx xxxx
-EMAIL_TO=recipient@gmail.com
-```
-*(Ghi chú: `GMAIL_APP_PASSWORD` là Mật khẩu ứng dụng 16 ký tự do Google cấp, không phải mật khẩu đăng nhập cá nhân).*
-
-### Bước 4: Kiểm Tra Tình Trạng Kết Nối & Dữ Liệu
-Chạy script kiểm tra để chắc chắn mọi bảng dữ liệu đã sẵn sàng:
+### Bước 1: Kiểm tra kết nối CSDL và dữ liệu nguồn
 ```bash
 python check_db_connection.py
 ```
-**Đầu ra chuẩn xác:**
-```text
-======================================================================
-OLIST STRATEGIC ANALYTICS: DATABASE CONNECTION CHECK
-======================================================================
-[*] Target Host : localhost:3306
-[*] Target User : root
-[*] Target DB   : olist_raw
-----------------------------------------------------------------------
-[+] Ket noi thanh cong! MySQL Server Version: 8.0.xx
+*Kiểm định trạng thái 99,441 đơn hàng, tính toàn vẹn khóa ngoại trên bảng `orders`, `order_items`, `payments`, `reviews`.*
 
-[*] Kiem tra trang thai du lieu cac bang:
-Table Name                   | Resolved Table       | Row Count    | Status
-----------------------------------------------------------------------
-orders                       | orders               | 99,441       | READY
-order_items                  | order_items          | 112,650      | READY
-payments                     | payments             | 103,886      | READY
-products                     | products             | 32,951       | READY
-reviews                      | reviews              | 99,224       | READY
-customers                    | customers            | 99,441       | READY
-sellers                      | sellers              | 3,095        | READY
-category_translation         | category_translation | 71           | READY
-geolocation                  | geolocation          | 1,000,163    | READY
-analytics_rfm_segments       | analytics_rfm_segments | 93,358       | READY
-----------------------------------------------------------------------
-[+] He thong san sang de thuc thi toan bo luong truy van va bao cao!
-======================================================================
-```
-
-### Bước 5: Thực Thi Xuất Báo Cáo
-Chạy script thực thi trực tiếp tại terminal:
+### Bước 2: Trích xuất Data Mart & Tạo sổ báo cáo Excel
 ```bash
-# 1. Chạy tự động xoay vòng chuyên đề
-python strategic_report_flow.py
-
-# 2. Hoặc chỉ định trực tiếp chuyên đề cụ thể
-python strategic_report_flow.py payment     # Chuyên đề Tài chính & Thanh toán
-python strategic_report_flow.py seller      # Chuyên đề Hiệu suất Người bán
-python strategic_report_flow.py rfm         # Chuyên đề Phân khúc Khách hàng
-python strategic_report_flow.py basket      # Chuyên đề Giỏ hàng & Multi-seller
-python strategic_report_flow.py category    # Chuyên đề Danh mục Sản phẩm
-python strategic_report_flow.py logistics   # Chuyên đề Vận hành Logistics
+python generate_handover_data.py
 ```
-Sau 8–10 giây, file CSV số liệu sẽ tự động xuất ra thư mục hiện hành và nội dung email HTML chuyên nghiệp sẽ được chuyển đến hộp thư nhận.
+*Tự động trích xuất các bảng dữ liệu tổng hợp vào `data_bi/` và xuất file Excel `Olist_Fulfillment_Handover_Analysis.xlsx` (5 sheet: KPIs, Quadrants, Regional, Category, Relational Model).*
+
+### Bước 3: Dựng dự án Power BI Desktop PBIP chuẩn Microsoft Fabric
+```bash
+python build_handover_pbip_complete.py
+```
+*Tạo toàn bộ mã nguồn TMDL (mô hình dữ liệu) và PBIR v2 (visual containers: cardVisual, donutChart, barChart, lineClusteredColumnComboChart, tableEx, slicer).*
+
+### Bước 4: Kiểm định mã nguồn Power BI qua CLI
+```bash
+powerbi-report-author validate "reports/Fulfillment_Handover_Diagnostic.Report"
+```
+*Bắt buộc trả về `result: "succeeded"` với `errorCount: 0` và `warningCount: 0`.*
+
+### Bước 5: Tạo Dashboard HTML tương tác sâu (UX/UI Optimized)
+```bash
+python generate_handover_dashboard_html.py
+```
+*Xuất bản `Olist_Fulfillment_Handover_Cockpit.html` chuẩn giao diện Tab-Based Natural Flow, biểu đồ 360px thoáng mắt, bộ lọc tương tác 2 chiều và thông báo toast.*
+
+### Bước 6: Khởi chạy Power BI Desktop Bridge
+```bash
+powerbi-desktop open "reports/Fulfillment_Handover_Diagnostic.pbip"
+```
+*Kích hoạt giao diện Power BI Desktop, kết nối bridge tự động và nạp dữ liệu tức thì.*
 
 ---
 
-## 🖥️ 5. Trực Quan Hóa Báo Cáo HTML Tương Tác Sâu (`reports/`)
+## 📦 Danh Mục Tệp Tin Đẩy Lên GitHub (Staging Manifest)
 
-Các báo cáo được xuất bản tại thư mục `reports/` (tiêu biểu: `reports/payment_financing_diagnostic.html`) tuân thủ nghiêm ngặt nguyên tắc thiết kế chống sáo rỗng (Anti-Cringe) và trực quan hóa dữ liệu thực chất:
-* **Slicer Động:** Lọc phân khúc nhanh gọn (`Tất cả`, `Thẻ tín dụng`, `Boleto`, `Voucher`, `Thẻ ghi nợ`).
-* **Cross-filtering 2 Chiều (Bi-directional):** Bấm chọn trên Slicer cập nhật biểu đồ và bảng; click trực tiếp vào lát cắt trên Doughnut Chart sẽ cập nhật ngược lại Slicer.
-* **Góc Nhìn Đối Chuẩn Động (Benchmark View):** Khi chọn phương thức thanh toán 1 lần, biểu đồ tự động chuyển sang so sánh đối chuẩn với các kỳ hạn trả góp và trung bình toàn sàn.
-* **Định Vị Căn Bệnh Cốt Lõi:** Phân tích cặn kẽ 3 nút thắt chí tử của mô hình kinh doanh Olist thay vì chỉ liệt kê các khuyến nghị sáo rỗng.
-* **Tiện Ích Bản In & Mã Lệnh:** Tích hợp nút sao chép câu lệnh SQL thực thi từng phần và CSS tối ưu định dạng in/PDF chuẩn phòng họp ban giám đốc.
+### Các tệp tin cốt lõi (BẮT BUỘC THEO DÕI):
+* **Mã nguồn tự động hóa:**
+  * `generate_handover_data.py`: Trích xuất dữ liệu, tính toán ma trận và sinh file Excel.
+  * `build_handover_pbip_complete.py`: Trình dựng dự án Fabric PBIP hoàn chỉnh.
+  * `generate_handover_dashboard_html.py`: Trình render HTML Dashboard tương tác.
+  * `check_db_connection.py`: Script kiểm tra CSDL và đối soát số dòng.
+* **Sản phẩm bàn giao phân tích:**
+  * `Olist_Fulfillment_Handover_Cockpit.html`: Dashboard tương tác 5 chặng logic (HTML standalone).
+  * `Olist_Fulfillment_Handover_Analysis.xlsx`: Sổ báo cáo Excel 5 sheet chuẩn tài chính.
+  * `Fulfillment_Handover_Preview.svg`: Bản thiết kế đồ họa Vector độ nét cao.
+  * `reports/Fulfillment_Handover_Diagnostic.pbip`: File dự án Power BI.
+  * `reports/Fulfillment_Handover_Diagnostic.Report/`: Toàn bộ visual containers, theme, layout PBIR.
+  * `reports/Fulfillment_Handover_Diagnostic.SemanticModel/`: Toàn bộ bảng TMDL và partition M.
+* **Kho Data Mart CSV (Nguồn cấp Power BI):**
+  * `data_bi/fact_fulfillment_quadrants.csv`
+  * `data_bi/fact_regional_logistics_friction.csv`
+  * `data_bi/fact_category_seller_overdue.csv`
+  * `data_bi/fact_fulfillment_kpi_summary.csv`
+* **Tài liệu phương pháp luận:**
+  * `AnalyticFlow.md`: Chuẩn tư duy phân tích chẩn đoán 6 bước.
+  * `GEMINI.md`: Quy chuẩn kỹ thuật về hợp đồng Grain, triệt tiêu AI watermark và bộ tứ bàn giao.
+  * `README.md`: Tài liệu hướng dẫn kiến trúc và thực thi hệ thống.
+  * `.gitignore`: Cấu hình loại trừ file nặng, database dump và cache.
+
+### Các tệp tin đã loại trừ (`.gitignore`):
+* `olist_dump.sql` (159 MB) & `OLIST.zip` (44 MB): Vượt giới hạn kích thước tệp của GitHub.
+* `mysql-*.msi` / `mysql-*.zip`: Bộ cài đặt phần mềm bên ngoài.
+* `.env`: Khóa bảo mật môi trường và mật khẩu cục bộ.
+* `__pycache__/`, `*.pyc`: File cache nhị phân của Python.
 
 ---
 
-## 📜 6. Giấy Phép & Bản Quyền
+## 🛠️ Lệnh Đẩy Mã Nguồn Lên GitHub (Git Commands)
 
-Dự án phục vụ mục đích nghiên cứu học thuật, chia sẻ tri thức phân tích dữ liệu ứng dụng và trình diễn năng lực kỹ thuật cơ sở dữ liệu. Dữ liệu gốc thuộc bản quyền công khai của sàn thương mại điện tử Olist trên nền tảng Kaggle.
+Sử dụng công cụ Git có sẵn tại máy cục bộ:
+
+```bash
+# 1. Khởi tạo Git repository (nếu chưa khởi tạo)
+git init
+
+# 2. Thêm remote repository trên GitHub
+git remote add origin https://github.com/<your-username>/<your-repo-name>.git
+
+# 3. Kiểm tra trạng thái các tệp tin theo dõi
+git status
+
+# 4. Đưa toàn bộ các tệp tin cấu trúc và phân tích vào Staging
+git add generate_handover_data.py build_handover_pbip_complete.py generate_handover_dashboard_html.py check_db_connection.py
+git add Olist_Fulfillment_Handover_Cockpit.html Olist_Fulfillment_Handover_Analysis.xlsx Fulfillment_Handover_Preview.svg
+git add reports/Fulfillment_Handover_Diagnostic.pbip reports/Fulfillment_Handover_Diagnostic.Report/ reports/Fulfillment_Handover_Diagnostic.SemanticModel/
+git add data_bi/fact_fulfillment_quadrants.csv data_bi/fact_regional_logistics_friction.csv data_bi/fact_category_seller_overdue.csv data_bi/fact_fulfillment_kpi_summary.csv
+git add README.md AnalyticFlow.md GEMINI.md .gitignore requirements.txt
+
+# 5. Tạo commit với thông điệp chuẩn mực
+git commit -m "feat: complete fulfillment handover SLA audit with automated PBIP, Excel and interactive HTML cockpit"
+
+# 6. Đặt nhánh chính là main và đẩy mã nguồn lên GitHub
+git branch -M main
+git push -u origin main
+```

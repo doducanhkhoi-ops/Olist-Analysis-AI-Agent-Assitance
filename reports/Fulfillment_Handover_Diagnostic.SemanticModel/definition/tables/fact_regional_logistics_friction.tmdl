@@ -1,0 +1,69 @@
+table fact_regional_logistics_friction
+	lineageTag: 02d1a3fc-d1f0-4876-aa7a-54950ecd3533
+
+	column state
+		dataType: string
+		lineageTag: 3f68b11e-9937-4ccf-ac02-9d68fc14c423
+		summarizeBy: none
+		sourceColumn: state
+		annotation SummarizationSetBy = Automatic
+
+	column total_orders
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 627f3603-e1f2-4d9c-af4f-74697fda0283
+		summarizeBy: sum
+		sourceColumn: total_orders
+		annotation SummarizationSetBy = Automatic
+
+	column carrier_breakdown_orders
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 6c7db9bd-76b0-4e26-ab5c-d115d13d95f7
+		summarizeBy: sum
+		sourceColumn: carrier_breakdown_orders
+		annotation SummarizationSetBy = Automatic
+
+	column carrier_breakdown_pct
+		dataType: double
+		lineageTag: 6a9225b2-226f-43d0-a92c-b4380d343239
+		summarizeBy: sum
+		sourceColumn: carrier_breakdown_pct
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_transit_days
+		dataType: double
+		lineageTag: 42ad4b4a-5226-4103-b3b9-e9cfa185613d
+		summarizeBy: sum
+		sourceColumn: avg_transit_days
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_transit_days_delayed
+		dataType: double
+		lineageTag: 7b7d21f6-26b9-4611-84d7-0013ebf43329
+		summarizeBy: sum
+		sourceColumn: avg_transit_days_delayed
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_review_score
+		dataType: double
+		lineageTag: 9f0be897-73d3-4988-8795-727ca2d7a667
+		summarizeBy: sum
+		sourceColumn: avg_review_score
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_regional_logistics_friction = m
+		mode: import
+		source =
+				let
+				    Nguon = Csv.Document(File.Contents("c:\\Users\\ASUS\\Documents\\Năm III\\CSDL\\data_bi\\fact_regional_logistics_friction.csv"),[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tieu de Duoc Tang cap" = Table.PromoteHeaders(Nguon, [PromoteAllScalars=true]),
+				    #"Thay doi Loai" = Table.TransformColumnTypes(#"Tieu de Duoc Tang cap",{{"state", type text}, {"total_orders", Int64.Type}, {"carrier_breakdown_orders", Int64.Type}, {"carrier_breakdown_pct", type number}, {"avg_transit_days", type number}, {"avg_transit_days_delayed", type number}, {"avg_review_score", type number}})
+				in
+				    #"Thay doi Loai"
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,5 @@
+﻿delivery_quadrant_id,delivery_quadrant,total_orders,order_share_pct,total_gmv,aov,avg_review_score,one_star_pct,five_star_pct,avg_seller_handling_days,avg_carrier_transit_days,avg_total_delivery_days,avg_sla_buffer_days
+Q1,"Q1: Chuẩn SLA (Seller Đúng, Carrier Kịp)",83493,86.08,11205604.56,134.21,4.31,6.32,62.57,2.54,7.99,10.55,13.08
+Q2,"Q2: Carrier Gánh (Seller Trễ, Carrier Kịp)",6944,7.16,1083205.29,155.99,4.07,9.91,54.15,8.6,7.62,16.24,9.36
+Q3,"Q3: Carrier Gãy (Seller Đúng, Carrier Trễ)",4745,4.89,664632.47,140.07,2.27,52.39,15.89,3.03,31.56,34.62,-11.58
+Q4,"Q4: Thảm Họa Kép (Seller Trễ, Carrier Trễ)",1817,1.87,325145.09,178.95,2.27,52.72,16.84,13.86,18.33,32.22,-10.53
