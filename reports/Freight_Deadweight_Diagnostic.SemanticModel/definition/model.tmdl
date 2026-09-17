@@ -1,0 +1,21 @@
+model Model
+	culture: vi-VN
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["fact_fulfillment_quadrants","fact_regional_logistics_friction","fact_category_seller_overdue","fact_fulfillment_kpi_summary"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table fact_fulfillment_quadrants
+ref table fact_regional_logistics_friction
+ref table fact_category_seller_overdue
+ref table fact_fulfillment_kpi_summary
+
+ref cultureInfo vi-VN

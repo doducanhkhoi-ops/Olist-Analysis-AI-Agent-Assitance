@@ -1,4 +1,4 @@
-# Quy chuẩn Phân tích Dữ liệu Dự án: The Diagnostic Analyst Mindset (POV Data Analyst Nhóm 6)
+# Quy chuẩn Phân tích Dữ liệu Dự án: The Diagnostic Analyst Mindset
 
 Mỗi khi nhận yêu cầu đọc dữ liệu, phân tích cơ sở dữ liệu (`olist_raw`, `awesome_chocolates`, v.v.), hoặc xây dựng báo cáo / dashboard cho dự án này, Agent **BẮT BUỘC** phải tuân thủ luồng tư duy chẩn đoán 6 bước của một Senior Data Analyst:
 
@@ -70,9 +70,17 @@ Mỗi vòng lặp phân tích (Iteration) BẮT BUỘC phải tuân thủ nghiê
    - **Ngôn Ngữ Tinh Gọn, Chống Cringe & Thừa Thãi (Anti-Cringe & Anti-Buzzword):** Tuyệt đối không dùng các từ ngữ phô trương tính năng thừa thãi kiểu AI (như "Slicer tương tác", "Bộ lọc trực tiếp", "Hệ thống thông minh"). Nếu là bộ lọc thì chỉ cần ghi gãy gọn là "Slicer" hoặc "Slicer: [Tên trường]". Toàn bộ nhãn, tiêu đề thẻ phải tự nhiên, chuẩn mực nghiệp vụ báo cáo cấp cao.
    - **Tiêu chuẩn Thiết kế (Anti-AI-Slop & Agentic Bespoke Design):** Hệ màu chuyên nghiệp có chiều sâu (Modern Dark Slate / Midnight Navy phối hợp neon/cyber indicator accents), Typography phân cấp chặt chẽ (Plus Jakarta Sans / Inter + JetBrains Mono), micro-interactions mượt mà, kèm nút Copy SQL và in ấn/PDF xuất bản. Cung cấp đường dẫn clickable link (`file:///...`) trực tiếp trên chat.
 
-6. **Chuẩn Hóa Văn Phong Bằng Kỹ Năng Watermark Remover (`clean-user-facing-text`):**
-   - Trong mọi phân tích hiển thị trên chat và trong nội dung văn bản báo cáo HTML, Agent **BẮT BUỘC** phải áp dụng quy trình lọc văn phong của skill `watermark remover` (`clean-user-facing-text`):
-     - **Triệt tiêu dấu vết AI (Zero AI Watermark / Anti-Cliché):** Loại bỏ hoàn toàn các câu từ mở đầu/kết thúc sáo rỗng kiểu AI ("Dưới đây là...", "Hy vọng phân tích này giúp ích...", "Là một Senior Analyst..."), các cụm từ đệm vô nghĩa, và các tiêu đề trang trí rập khuôn.
-     - **Nhịp điệu Hành chính Cấp cao (Executive Cadence & High Burstiness):** Hành văn tự nhiên, trực diện, đanh thép, độ dài câu biến hóa linh hoạt, tập trung 100% vào logic kinh doanh, bằng chứng thực tế và hành động khắc phục cụ thể.
-     - **Bảo toàn Tuyệt đối Dữ liệu:** Không bịa đặt chi tiết, giữ nguyên độ chính xác từng byte của số liệu thực chứng từ SQL, công thức, mã code và đường dẫn liên kết.
+7. **Quy Trình Thực Thi 2 Pha Tinh Gọn (The 2-Phase Diagnostic Protocol):**
+   - **Pha 1: Thẩm Định Giả Thuyết & Kiểm Chứng Thực Nghiệm (4–5 phút):**
+     - Đặt định hướng chẩn đoán và câu hỏi kinh doanh sắc bén.
+     - Khai thác MySQL, hiển thị câu lệnh SQL và bảng số liệu thực chứng trên chat.
+     - Mổ xẻ cơ chế nghịch lý và định vị căn bệnh cốt lõi.
+   - **Pha 2: Tự Động Hóa Đóng Gói Bộ Tứ Ấn Phẩm (5–6 phút):**
+     - Sau khi logic và dữ liệu đã được chốt: Tự động chạy script sinh đồng bộ 4 sản phẩm:
+       1. CSV Data Marts trong `data_bi/`.
+       2. Sổ báo cáo Excel điều hành 5 sheet (`.xlsx`) định dạng số học chuẩn.
+       3. Dashboard HTML Cockpit chuyển tab tương tác 2 chiều với Chart.js (`.html`).
+       4. Dự án Power BI Fabric PBIP (`.pbip`, `.Report`, `.SemanticModel`, TMDL, 12 visuals schema 2.9.0, validate 0 lỗi).
+     - Áp dụng kỹ năng Watermark Remover trên toàn bộ văn bản và tài liệu `README.md`.
+     - Đóng gói Git commit sạch sẵn sàng đồng bộ.
 

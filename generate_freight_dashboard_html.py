@@ -1,0 +1,1144 @@
+import os
+import json
+
+base_dir = r"c:\Users\ASUS\Documents\Năm III\CSDL"
+html_path = os.path.join(base_dir, "Olist_Freight_Deadweight_Cockpit.html")
+
+html_content = """<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Báo Cáo Chẩn Đoán: Điểm Nghẽn Bàn Giao Vận Tải & Nghịch Lý Carrier Cứu Đơn</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #070B14;
+      --bg-surface: #0E1526;
+      --bg-card: #141E34;
+      --border-color: #1E2D4A;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-faint: #64748B;
+      --accent-blue: #38BDF8;
+      --accent-green: #10B981;
+      --accent-amber: #F59E0B;
+      --accent-rose: #F43F5E;
+      --accent-purple: #A855F7;
+      --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      font-size: 14px;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .badge-scope {
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent-blue);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
+    .header-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #FFF;
+      letter-spacing: -0.3px;
+    }
+    .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .btn-reset {
+      background: rgba(244, 63, 94, 0.12);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      color: #FDA4AF;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 11px;
+      transition: all 0.2s;
+    }
+    .btn-reset:hover {
+      background: rgba(244, 63, 94, 0.25);
+      color: #FFF;
+    }
+
+    /* NAVIGATION TABS */
+    .tab-bar {
+      background: #0A0F1D;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      padding: 0 28px;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 10px 18px;
+      font-family: var(--font-main);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-btn:hover {
+      color: #FFF;
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .tab-btn.active {
+      color: var(--accent-blue);
+      border-bottom-color: var(--accent-blue);
+      background: rgba(56, 189, 248, 0.06);
+    }
+    .tab-badge {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+    }
+    .tab-btn.active .tab-badge {
+      background: rgba(56, 189, 248, 0.2);
+      color: var(--accent-blue);
+    }
+
+    /* MAIN VIEWPORT */
+    main {
+      flex: 1;
+      padding: 18px 28px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .deck-slide {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      height: 100%;
+    }
+    .deck-slide.active {
+      display: flex;
+    }
+
+    /* RELATIONAL CHAIN BANNER */
+    .relational-bar {
+      background: rgba(14, 21, 38, 0.7);
+      border: 1px dashed rgba(56, 189, 248, 0.35);
+      border-radius: 8px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+    .relational-tag {
+      font-weight: 700;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      font-size: 10.5px;
+      letter-spacing: 0.5px;
+    }
+    .relational-code {
+      font-family: var(--font-mono);
+      color: #34D399;
+      background: rgba(16, 185, 129, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      font-size: 11px;
+    }
+
+    /* KPI CARDS */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent-blue);
+    }
+    .kpi-card.green::before { background: var(--accent-green); }
+    .kpi-card.amber::before { background: var(--accent-amber); }
+    .kpi-card.rose::before { background: var(--accent-rose); }
+    .kpi-card.purple::before { background: var(--accent-purple); }
+
+    .kpi-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .kpi-value {
+      font-size: 23px;
+      font-weight: 800;
+      color: #FFF;
+      font-family: var(--font-mono);
+      letter-spacing: -0.5px;
+    }
+    .kpi-sub {
+      font-size: 11px;
+      color: var(--text-faint);
+    }
+
+    /* GRID LAYOUTS */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      flex: 1;
+      min-height: 0;
+    }
+    .grid-1-2 {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 16px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .card-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow: hidden;
+      min-height: 320px;
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 8px;
+    }
+    .panel-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .panel-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .chart-container {
+      position: relative;
+      flex: 1;
+      min-height: 240px;
+      width: 100%;
+    }
+
+    /* TABLES */
+    .table-container {
+      overflow: auto;
+      flex: 1;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: var(--bg-card);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+    }
+    th {
+      background: #0A1020;
+      color: #94A3B8;
+      padding: 9px 12px;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    td {
+      padding: 8px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #E2E8F0;
+      font-family: var(--font-main);
+    }
+    tr:hover td {
+      background: rgba(56, 189, 248, 0.04);
+    }
+    .mono-cell {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+    .badge-rescue {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-danger {
+      background: rgba(244, 63, 94, 0.15);
+      color: #FB7185;
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .row-highlight {
+      background: rgba(56, 189, 248, 0.12) !important;
+      outline: 1px solid var(--accent-blue);
+    }
+    .row-dimmed {
+      opacity: 0.35;
+    }
+
+    /* SLICER CONTROLS */
+    .slicer-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+    .slicer-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .slicer-btn:hover {
+      color: #FFF;
+      border-color: #475569;
+    }
+    .slicer-btn.active {
+      background: var(--accent-blue);
+      color: #000;
+      border-color: var(--accent-blue);
+      font-weight: 700;
+    }
+
+    /* INSIGHT CALLOUT BOX */
+    .callout-box {
+      background: rgba(14, 21, 38, 0.85);
+      border-left: 4px solid var(--accent-amber);
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #CBD5E1;
+      border-top: 1px solid var(--border-color);
+      border-right: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .callout-title {
+      font-weight: 700;
+      color: #FBBF24;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+    }
+
+    /* FOOTER CONTROLS */
+    footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-color);
+      padding: 10px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: #FFF;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: #1E2D4A;
+      border-color: var(--accent-blue);
+    }
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .dots-indicator {
+      display: flex;
+      gap: 6px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #334155;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dot.active {
+      background: var(--accent-blue);
+      width: 20px;
+      border-radius: 4px;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #FFF;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      gap: 8px;
+      z-index: 1000;
+      animation: fadeIn 0.2s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand-group">
+      <span class="badge-scope">Fulfillment Audit</span>
+      <h1 class="header-title">Giải Phẫu Điểm Nghẽn Bàn Giao: Ai Làm Chậm Đơn Hàng & Nghịch Lý Carrier Cứu Đơn</h1>
+    </div>
+    <div class="header-meta">
+      <span>Tập dữ liệu: <strong>96,999 đơn Delivered</strong></span>
+      <button class="btn-reset" onclick="resetAllFilters()">↺ Xóa Bộ Lọc</button>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchSlide(0)">
+      <span>1. Ma Trận 4 Góc Phần Tư</span>
+      <span class="tab-badge">Overview</span>
+    </button>
+    <button class="tab-btn" onclick="switchSlide(1)">
+      <span>2. Nghịch Lý Carrier Cứu Nguy</span>
+      <span class="tab-badge">Paradox</span>
+    </button>
+    <button class="tab-btn" onclick="switchSlide(2)">
+      <span>3. Điểm Nghẽn Vận Tải Liên Bang</span>
+      <span class="tab-badge">Regional</span>
+    </button>
+    <button class="tab-btn" onclick="switchSlide(3)">
+      <span>4. Điểm Lệch SLA Ngành Hàng</span>
+      <span class="tab-badge">Category</span>
+    </button>
+    <button class="tab-btn" onclick="switchSlide(4)">
+      <span>5. Căn Bệnh Cốt Lõi & Playbook</span>
+      <span class="tab-badge">Playbook</span>
+    </button>
+  </div>
+
+  <!-- MAIN SLIDES CONTAINER -->
+  <main>
+
+    <!-- SLIDE 1: OVERVIEW & 4 QUADRANTS -->
+    <div class="deck-slide active" id="slide-0">
+      <div class="relational-bar">
+        <span class="relational-tag">Relational Chain:</span>
+        <span class="relational-code">orders (o) → order_items (oi) → reviews (r)</span>
+        <span style="margin-left: auto;">Khóa SLA: <code>o.order_delivered_carrier_date vs oi.shipping_limit_date</code> VÀ <code>DATE(delivered) vs DATE(estimated)</code></span>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <span class="kpi-label">Tổng Đơn Delivered</span>
+          <span class="kpi-value">96,999</span>
+          <span class="kpi-sub">100% mẫu giao thành công</span>
+        </div>
+        <div class="kpi-card green">
+          <span class="kpi-label">Carrier Cứu Đơn (Q2)</span>
+          <span class="kpi-value">79.26%</span>
+          <span class="kpi-sub">6,944 / 8,761 đơn seller ngâm trễ</span>
+        </div>
+        <div class="kpi-card rose">
+          <span class="kpi-label">Đơn Carrier Gãy (Q3)</span>
+          <span class="kpi-value">4,745</span>
+          <span class="kpi-sub">4.89% đơn seller đúng, carrier trễ</span>
+        </div>
+        <div class="kpi-card amber">
+          <span class="kpi-label">Review Đúng vs Trễ Hạn</span>
+          <span class="kpi-value">4.29 ➔ 2.27</span>
+          <span class="kpi-sub">Sụt đổ -2.02 sao khi vỡ cam kết</span>
+        </div>
+        <div class="kpi-card purple">
+          <span class="kpi-label">GMV Bị Thiệt Hại Uy Tín</span>
+          <span class="kpi-value">R$ 989.8K</span>
+          <span class="kpi-sub">6,562 đơn rơi vào Q3 & Q4</span>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card-panel">
+          <div class="panel-header">
+            <span class="panel-title">Cơ Cấu 4 Phân Khúc Bàn Giao & Vận Tải</span>
+            <span class="badge-scope" style="font-size: 10px;">Tỷ Trọng % Đơn</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartQuadrantDonut"></canvas>
+          </div>
+        </div>
+
+        <div class="card-panel">
+          <div class="panel-header">
+            <span class="panel-title">Tổng Doanh Thu GMV & AOV Giữa 4 Góc Phần Tư</span>
+            <span class="badge-scope" style="font-size: 10px;">Đơn Vị: BRL</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartQuadrantGMV"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: PARADOX & CROSS-FILTERING -->
+    <div class="deck-slide" id="slide-1">
+      <div class="relational-bar">
+        <span class="relational-tag">Cross-Filtering:</span>
+        <div class="slicer-box">
+          <span>Lọc Góc Phần Tư:</span>
+          <button class="slicer-btn active" onclick="filterQuadrant('ALL')">Tất Cả</button>
+          <button class="slicer-btn" onclick="filterQuadrant('Q1')">Q1: Chuẩn SLA</button>
+          <button class="slicer-btn" onclick="filterQuadrant('Q2')">Q2: Carrier Gánh</button>
+          <button class="slicer-btn" onclick="filterQuadrant('Q3')">Q3: Carrier Gãy</button>
+          <button class="slicer-btn" onclick="filterQuadrant('Q4')">Q4: Thảm Họa Kép</button>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card-panel">
+          <div class="panel-header">
+            <span class="panel-title">Nghịch Lý Bất Đối Xứng Trách Nhiệm (Customer Blame Asymmetry)</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartBlameCombo"></canvas>
+          </div>
+          <div class="callout-box">
+            <div class="callout-title">⚡ Phát Hiện Trọng Yếu: Điểm Đáy Đồng Nhất</div>
+            Khi đơn hàng bị giao trễ hẹn: Dù lỗi hoàn toàn do bưu cục làm trễ trong khi người bán gửi cực nhanh (Q3) hay cả người bán lẫn bưu cục cùng trễ (Q4), <strong>điểm review của khách hàng đều chạm đáy ở mức chính xác 2.27 sao và tỷ lệ 1-sao chạm 52.4% - 52.7%</strong>! Khách hàng không phân biệt lỗi nội bộ, họ quy toàn bộ lỗi lên sàn!
+          </div>
+        </div>
+
+        <div class="card-panel">
+          <div class="panel-header">
+            <span class="panel-title">Bảng Kê Chi Tiết 4 Phân Khúc Bàn Giao</span>
+            <span style="font-size: 11px; color: var(--text-muted);">Bấm hàng để đối chiếu</span>
+          </div>
+          <div class="table-container">
+            <table id="quadrantTable">
+              <thead>
+                <tr>
+                  <th>Mã</th>
+                  <th>Phân Khúc</th>
+                  <th>Số Đơn</th>
+                  <th>Tỷ Lệ</th>
+                  <th>Review</th>
+                  <th>% 1-Sao</th>
+                  <th>Seller (Ngày)</th>
+                  <th>Transit (Ngày)</th>
+                  <th>Đệm SLA</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="row-Q1" onclick="filterQuadrant('Q1')">
+                  <td><span class="badge-scope">Q1</span></td>
+                  <td><strong>Chuẩn SLA</strong> (Seller đúng, Carrier kịp)</td>
+                  <td class="mono-cell">83,493</td>
+                  <td class="mono-cell">86.08%</td>
+                  <td class="mono-cell" style="color: #34D399; font-weight:700;">4.31</td>
+                  <td class="mono-cell">6.32%</td>
+                  <td class="mono-cell">2.5</td>
+                  <td class="mono-cell">8.0</td>
+                  <td class="mono-cell" style="color:#34D399;">+13.1 d</td>
+                </tr>
+                <tr id="row-Q2" onclick="filterQuadrant('Q2')">
+                  <td><span class="badge-rescue">Q2</span></td>
+                  <td><strong>Carrier Gánh</strong> (Seller trễ, Carrier kịp)</td>
+                  <td class="mono-cell">6,944</td>
+                  <td class="mono-cell">7.16%</td>
+                  <td class="mono-cell" style="color: #38BDF8; font-weight:700;">4.07</td>
+                  <td class="mono-cell">9.91%</td>
+                  <td class="mono-cell" style="color:#F43F5E;">8.6</td>
+                  <td class="mono-cell" style="color:#34D399;">7.6</td>
+                  <td class="mono-cell" style="color:#38BDF8;">+9.4 d</td>
+                </tr>
+                <tr id="row-Q3" onclick="filterQuadrant('Q3')">
+                  <td><span class="badge-danger">Q3</span></td>
+                  <td><strong>Carrier Gãy</strong> (Seller đúng, Carrier trễ)</td>
+                  <td class="mono-cell">4,745</td>
+                  <td class="mono-cell">4.89%</td>
+                  <td class="mono-cell" style="color: #F43F5E; font-weight:700;">2.27</td>
+                  <td class="mono-cell" style="color: #F43F5E; font-weight:700;">52.39%</td>
+                  <td class="mono-cell">3.0</td>
+                  <td class="mono-cell" style="color:#F43F5E;">31.6</td>
+                  <td class="mono-cell" style="color:#F43F5E;">-11.6 d</td>
+                </tr>
+                <tr id="row-Q4" onclick="filterQuadrant('Q4')">
+                  <td><span class="badge-danger">Q4</span></td>
+                  <td><strong>Thảm Họa Kép</strong> (Seller trễ, Carrier trễ)</td>
+                  <td class="mono-cell">1,817</td>
+                  <td class="mono-cell">1.87%</td>
+                  <td class="mono-cell" style="color: #F43F5E; font-weight:700;">2.27</td>
+                  <td class="mono-cell" style="color: #F43F5E; font-weight:700;">52.72%</td>
+                  <td class="mono-cell" style="color:#F43F5E;">13.9</td>
+                  <td class="mono-cell" style="color:#F43F5E;">18.3</td>
+                  <td class="mono-cell" style="color:#F43F5E;">-10.5 d</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: REGIONAL LOGISTICS FRICTION -->
+    <div class="deck-slide" id="slide-2">
+      <div class="relational-bar">
+        <span class="relational-tag">Relational Chain:</span>
+        <span class="relational-code">orders (o) → customers (c) → sellers (s)</span>
+        <span style="margin-left: auto;">Phân tích Tuyến Vận Chuyển Liên Bang (Interstate Friction)</span>
+      </div>
+
+      <div class="grid-2">
+        <div class="card-panel">
+          <div class="panel-header">
+            <span class="panel-title">Tỷ Lệ Carrier Gãy Theo Bang Nhận Hàng (%)</span>
+            <span class="badge-danger" style="font-size: 10px;">Top Bang Rủi Ro</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartRegionalFriction"></canvas>
+          </div>
+        </div>
+
+        <div class="card-panel">
+          <div class="panel-header">
+            <span class="panel-title">Thời Gian Transit Thực Tế Khi Bị Trễ vs Bình Thường (Ngày)</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartRegionalTransit"></canvas>
+          </div>
+          <div class="callout-box">
+            <div class="callout-title">🔎 Cắt Lớp Địa Lý: Đứt Gãy Tuyến Đông Bắc & Bắc</div>
+            Tại các bang xa như <strong>Ceará (CE: 11.62% gãy)</strong> và <strong>Bahia (BA: 10.33% gãy)</strong>, thời gian vận chuyển khi bị trễ vọt lên <strong>36.0 đến 40.6 ngày</strong> (gấp 4 lần so với São Paulo: 22.6 ngày). Trong khi đó, Rio de Janeiro (RJ) kẹt cứng tới 1,174 đơn bị bưu cục làm chậm do nghẽn trung tâm chia chọn nội đô.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: CATEGORY SELLER LAG -->
+    <div class="deck-slide" id="slide-3">
+      <div class="relational-bar">
+        <span class="relational-tag">Relational Chain:</span>
+        <span class="relational-code">orders (o) → order_items (oi) → products (p) → translation (t)</span>
+        <span style="margin-left: auto;">Đặc thù ngành hàng & Giới hạn thời gian chuẩn bị (Handling Time SLA)</span>
+      </div>
+
+      <div class="grid-2">
+        <div class="card-panel">
+          <div class="panel-header">
+            <span class="panel-title">Top Ngành Hàng Seller Vi Phạm Hạn Bàn Giao Cao Nhất (%)</span>
+            <span class="badge-scope" style="font-size: 10px;">≥ 1,000 Đơn</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartCategoryLag"></canvas>
+          </div>
+        </div>
+
+        <div class="card-panel">
+          <div class="panel-header">
+            <span class="panel-title">Số Ngày Seller Xử Lý Hàng Trung Bình (Ngày)</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartCategoryDays"></canvas>
+          </div>
+          <div class="callout-box">
+            <div class="callout-title">🚨 Điểm Bất Cập: Nội Thất Văn Phòng (Office Furniture)</div>
+            Ngành <strong>Office Furniture</strong> có tỷ lệ seller trễ hạn lên tới <strong>28.25%</strong> với thời gian chuẩn bị trung bình <strong>10.8 ngày</strong> (gấp 4 lần các ngành khác). Review ngành này sụt giảm nghiêm trọng xuống <strong>3.52 sao</strong>. Nguyên nhân: Hàng cồng kềnh, cần tháo lắp và xuất kho cơ giới nhưng Olist áp đặt hạn chuẩn bị tĩnh như hàng điện tử/tiêu dùng!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: CORE PROBLEM & PLAYBOOK -->
+    <div class="deck-slide" id="slide-4">
+      <div class="relational-bar">
+        <span class="relational-tag">Strategic Synthesis:</span>
+        <span class="relational-code">Diagnostic Conclusion ➔ Actionable Business Remedy</span>
+      </div>
+
+      <div class="grid-2">
+        <div class="card-panel">
+          <div class="panel-header">
+            <span class="panel-title">Định Vị 3 Căn Bệnh Cốt Lõi (Core Diagnoses)</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px; font-size: 12.5px; line-height: 1.6; color: #CBD5E1;">
+            <div style="background: rgba(239, 68, 68, 0.08); border-left: 3px solid #EF4444; padding: 10px 14px; border-radius: 4px;">
+              <strong style="color: #F87171;">1. Bẫy Dung Túng Người Bán (The Tolerated Laggard Trap):</strong><br>
+              79.26% số đơn seller ngâm trễ (6,944 đơn Q2) vẫn được Carrier giao kịp tới tay khách hàng trước hạn hứa, giúp duy trì review 4.07 sao. Olist lầm tưởng đây là vận hành trơn tru nên <strong>hoàn toàn không có chế tài phạt seller ngâm đơn</strong>. Khi cao điểm mùa vụ (Black Friday), Carrier quá tải không còn cứu được nữa, toàn bộ lượng đơn này rơi tự do xuống Q4!
+            </div>
+            <div style="background: rgba(245, 158, 11, 0.08); border-left: 3px solid #F59E0B; padding: 10px 14px; border-radius: 4px;">
+              <strong style="color: #FBBF24;">2. Cơ Chế Đổ Oan Cho Seller (The Seller Reputation Contamination):</strong><br>
+              Ở Q3, người bán chuẩn bị siêu tốc trong 3 ngày và giao bưu cục đúng hạn 100%, nhưng Carrier làm chậm tới 31.6 ngày, kéo review sụp xuống 2.27 sao (52.4% 1 sao). Seller chuẩn mực bị phạt oan trên điểm hiển thị gian hàng do lỗi của hãng vận chuyển.
+            </div>
+            <div style="background: rgba(168, 85, 247, 0.08); border-left: 3px solid #A855F7; padding: 10px 14px; border-radius: 4px;">
+              <strong style="color: #C084FC;">3. Thuật Toán Cam Kết Tĩnh Đoán Mò (Static SLA Allocation Fallacy):</strong><br>
+              Olist cấp hạn chuẩn bị cào bằng (3-5 ngày) cho mọi ngành hàng và ước tính ngày giao cố định, không tính đến đặc thù cồng kềnh (Office Furniture ngâm 10.8 ngày) và khoảng cách tuyến liên bang (Đông Bắc trễ gấp 4 lần São Paulo).
+            </div>
+          </div>
+        </div>
+
+        <div class="card-panel">
+          <div class="panel-header">
+            <span class="panel-title">Playbook Hành Động Chiến Lược 4 Nhóm</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px; font-size: 12px; line-height: 1.5; color: #CBD5E1;">
+            <div style="background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10B981; padding: 8px 12px; border-radius: 4px;">
+              <strong style="color: #34D399;">[Nhóm A - Can thiệp vận hành tức thì]:</strong> Thiết lập cơ chế tách bạch Review: Chỉ cho phép khách hàng đánh giá Sản phẩm / Người bán; tách riêng phần đánh giá Vận chuyển bưu cục để bảo vệ điểm uy tín của Seller ở Q3.
+            </div>
+            <div style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid #38BDF8; padding: 8px 12px; border-radius: 4px;">
+              <strong style="color: #38BDF8;">[Nhóm B - Thử nghiệm có đối chứng]:</strong> Triển khai Dynamic Shipping Limit: Cấp hạn gửi hàng linh hoạt theo ngành hàng (Office furniture: +5 ngày chuẩn bị, Consumer goods: 48h) và phạt giảm hiển thị với Seller ngâm hàng ở Q2.
+            </div>
+            <div style="background: rgba(245, 158, 11, 0.08); border-left: 3px solid #F59E0B; padding: 8px 12px; border-radius: 4px;">
+              <strong style="color: #FBBF24;">[Nhóm C - Giám sát định kỳ]:</strong> Dashboard cảnh báo sớm "Đơn hàng Seller sắp trễ hạn bưu cục" (Countdown Alert) để kích hoạt Seller gửi hàng trước khi bưu tá ghé kho.
+            </div>
+            <div style="background: rgba(244, 63, 94, 0.08); border-left: 3px solid #F43F5E; padding: 8px 12px; border-radius: 4px;">
+              <strong style="color: #FB7185;">[Nhóm D - Dứt khoát CHƯA LÀM do thiếu căn cứ]:</strong> Dứt khoát KHÔNG thay đổi hãng vận chuyển trên diện rộng hay chi tiền trợ giá ship nếu chưa khắc phục điểm nghẽn ngâm hàng của Seller tại nguồn.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">
+      <span>Điều khiển: Phím <code>←</code> / <code>→</code> hoặc <code>PageUp</code> / <code>PageDown</code></span>
+      <span>•</span>
+      <span>Trang <strong id="currentPageNum">1</strong> / 5</span>
+    </div>
+    <div class="nav-controls">
+      <button class="nav-btn" id="prevBtn" onclick="prevSlide()" disabled>← Trước</button>
+      <div class="dots-indicator">
+        <span class="dot active" onclick="switchSlide(0)"></span>
+        <span class="dot" onclick="switchSlide(1)"></span>
+        <span class="dot" onclick="switchSlide(2)"></span>
+        <span class="dot" onclick="switchSlide(3)"></span>
+        <span class="dot" onclick="switchSlide(4)"></span>
+      </div>
+      <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Tiếp →</button>
+    </div>
+  </footer>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toastBox"></div>
+
+  <!-- SCRIPT ENGINE -->
+  <script>
+    let currentSlide = 0;
+    const totalSlides = 5;
+    let charts = {};
+
+    function showToast(msg) {
+      const t = document.getElementById('toastBox');
+      t.innerText = msg;
+      t.style.display = 'flex';
+      setTimeout(() => { t.style.display = 'none'; }, 2500);
+    }
+
+    function switchSlide(idx) {
+      if (idx < 0 || idx >= totalSlides) return;
+      currentSlide = idx;
+      document.querySelectorAll('.deck-slide').forEach((el, i) => {
+        el.classList.toggle('active', i === idx);
+      });
+      document.querySelectorAll('.tab-btn').forEach((el, i) => {
+        el.classList.toggle('active', i === idx);
+      });
+      document.querySelectorAll('.dot').forEach((el, i) => {
+        el.classList.toggle('active', i === idx);
+      });
+      document.getElementById('currentPageNum').innerText = idx + 1;
+      document.getElementById('prevBtn').disabled = (idx === 0);
+      document.getElementById('nextBtn').disabled = (idx === totalSlides - 1);
+
+      // Trigger chart resize
+      setTimeout(() => {
+        Object.values(charts).forEach(c => c && c.resize && c.resize());
+      }, 50);
+    }
+
+    function nextSlide() { switchSlide(currentSlide + 1); }
+    function prevSlide() { switchSlide(currentSlide - 1); }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') nextSlide();
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
+    });
+
+    // CROSS FILTERING ENGINE
+    function filterQuadrant(quad) {
+      document.querySelectorAll('.slicer-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.innerText.includes(quad) || (quad === 'ALL' && btn.innerText.includes('Tất Cả')));
+      });
+
+      const rows = document.querySelectorAll('#quadrantTable tbody tr');
+      rows.forEach(r => {
+        if (quad === 'ALL') {
+          r.classList.remove('row-highlight', 'row-dimmed');
+        } else if (r.id === 'row-' + quad) {
+          r.classList.add('row-highlight');
+          r.classList.remove('row-dimmed');
+        } else {
+          r.classList.remove('row-highlight');
+          r.classList.add('row-dimmed');
+        }
+      });
+
+      // Update Blame Combo Chart highlight
+      if (charts.blameCombo) {
+        const bgColors = ['rgba(56, 189, 248, 0.7)', 'rgba(16, 185, 129, 0.7)', 'rgba(244, 63, 94, 0.7)', 'rgba(239, 68, 68, 0.7)'];
+        if (quad !== 'ALL') {
+          const quadIndex = ['Q1', 'Q2', 'Q3', 'Q4'].indexOf(quad);
+          charts.blameCombo.data.datasets[0].backgroundColor = bgColors.map((c, i) => i === quadIndex ? c : 'rgba(100, 116, 139, 0.2)');
+        } else {
+          charts.blameCombo.data.datasets[0].backgroundColor = bgColors;
+        }
+        charts.blameCombo.update();
+      }
+
+      showToast(quad === 'ALL' ? 'Đã thiết lập lại toàn bộ phân khúc' : 'Đang lọc góc phần tư: ' + quad);
+    }
+
+    function resetAllFilters() {
+      filterQuadrant('ALL');
+      switchSlide(0);
+      showToast('Đã hoàn tác tất cả bộ lọc về trạng thái toàn cảnh');
+    }
+
+    // CHART INITIALIZATIONS
+    window.addEventListener('load', () => {
+      // 1. Donut Chart
+      charts.quadrantDonut = new Chart(document.getElementById('chartQuadrantDonut'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Q1: Chuẩn SLA (86.1%)', 'Q2: Carrier Gánh (7.2%)', 'Q3: Carrier Gãy (4.9%)', 'Q4: Thảm Họa Kép (1.9%)'],
+          datasets: [{
+            data: [83493, 6944, 4745, 1817],
+            backgroundColor: ['#38BDF8', '#10B981', '#F43F5E', '#EF4444'],
+            borderColor: '#0E1526',
+            borderWidth: 3
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'right', labels: { color: '#94A3B8', font: { family: 'Plus Jakarta Sans', size: 11 } } }
+          },
+          cutout: '68%'
+        }
+      });
+
+      // 2. GMV Bar Chart
+      charts.quadrantGMV = new Chart(document.getElementById('chartQuadrantGMV'), {
+        type: 'bar',
+        data: {
+          labels: ['Q1: Chuẩn SLA', 'Q2: Carrier Gánh', 'Q3: Carrier Gãy', 'Q4: Thảm Họa Kép'],
+          datasets: [
+            {
+              label: 'Tổng GMV (Triệu BRL)',
+              data: [11.21, 1.08, 0.66, 0.33],
+              backgroundColor: '#38BDF8',
+              borderRadius: 4
+            },
+            {
+              label: 'AOV Giá Trị Đơn (BRL)',
+              data: [134.2, 156.0, 140.1, 179.0],
+              backgroundColor: '#F59E0B',
+              borderRadius: 4,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { ticks: { color: '#94A3B8' }, grid: { display: false } },
+            y: { ticks: { color: '#94A3B8' }, grid: { color: 'rgba(255,255,255,0.05)' }, title: { display: true, text: 'Triệu BRL', color: '#64748B' } },
+            y1: { position: 'right', ticks: { color: '#F59E0B' }, grid: { display: false }, title: { display: true, text: 'AOV (BRL)', color: '#F59E0B' } }
+          },
+          plugins: {
+            legend: { labels: { color: '#94A3B8' } }
+          }
+        }
+      });
+
+      // 3. Blame Combo Chart
+      charts.blameCombo = new Chart(document.getElementById('chartBlameCombo'), {
+        type: 'bar',
+        data: {
+          labels: ['Q1: Chuẩn SLA', 'Q2: Carrier Gánh', 'Q3: Carrier Gãy', 'Q4: Thảm Họa Kép'],
+          datasets: [
+            {
+              type: 'bar',
+              label: 'Tỷ Lệ 1 Sao (%)',
+              data: [6.32, 9.91, 52.39, 52.72],
+              backgroundColor: ['rgba(56, 189, 248, 0.7)', 'rgba(16, 185, 129, 0.7)', 'rgba(244, 63, 94, 0.7)', 'rgba(239, 68, 68, 0.7)'],
+              borderRadius: 4,
+              yAxisID: 'y'
+            },
+            {
+              type: 'line',
+              label: 'Điểm Review Score (Sao)',
+              data: [4.31, 4.07, 2.27, 2.27],
+              borderColor: '#FBBF24',
+              backgroundColor: '#FBBF24',
+              borderWidth: 3,
+              pointRadius: 6,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { ticks: { color: '#94A3B8' }, grid: { display: false } },
+            y: { ticks: { color: '#94A3B8' }, grid: { color: 'rgba(255,255,255,0.05)' }, title: { display: true, text: '% Đánh Giá 1 Sao', color: '#F43F5E' } },
+            y1: { position: 'right', min: 1, max: 5, ticks: { color: '#FBBF24' }, grid: { display: false }, title: { display: true, text: 'Điểm Review Trung Bình', color: '#FBBF24' } }
+          },
+          plugins: {
+            legend: { labels: { color: '#94A3B8' } }
+          }
+        }
+      });
+
+      // 4. Regional Friction Bar
+      charts.regionalFriction = new Chart(document.getElementById('chartRegionalFriction'), {
+        type: 'bar',
+        data: {
+          labels: ['Ceará (CE)', 'Bahia (BA)', 'Rio de Janeiro (RJ)', 'Espírito Santo (ES)', 'Pernambuco (PE)', 'Santa Catarina (SC)', 'Goiás (GO)', 'Rio Grande do Sul (RS)', 'Minas Gerais (MG)', 'São Paulo (SP)'],
+          datasets: [{
+            label: 'Tỷ Lệ Carrier Gãy (%)',
+            data: [11.62, 10.33, 9.45, 8.48, 7.61, 6.01, 5.07, 4.78, 3.10, 2.65],
+            backgroundColor: (ctx) => ctx.raw > 8 ? '#F43F5E' : '#38BDF8',
+            borderRadius: 4
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { ticks: { color: '#94A3B8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { ticks: { color: '#94A3B8', font: { family: 'Plus Jakarta Sans', size: 11 } }, grid: { display: false } }
+          },
+          plugins: { legend: { display: false } }
+        }
+      });
+
+      // 5. Regional Transit Bar
+      charts.regionalTransit = new Chart(document.getElementById('chartRegionalTransit'), {
+        type: 'bar',
+        data: {
+          labels: ['Ceará (CE)', 'Pernambuco (PE)', 'Bahia (BA)', 'Rio Grande do Sul (RS)', 'Rio de Janeiro (RJ)', 'Goiás (GO)', 'Espírito Santo (ES)', 'Santa Catarina (SC)', 'Minas Gerais (MG)', 'São Paulo (SP)'],
+          datasets: [
+            {
+              label: 'Transit TB Khi Bị Trễ (Ngày)',
+              data: [40.6, 38.7, 36.0, 35.6, 34.8, 33.4, 30.8, 30.4, 27.1, 22.6],
+              backgroundColor: '#EF4444',
+              borderRadius: 4
+            },
+            {
+              label: 'Transit TB Chuẩn (Ngày)',
+              data: [20.8, 17.5, 15.3, 14.8, 14.8, 15.1, 15.3, 14.5, 11.5, 8.3],
+              backgroundColor: 'rgba(100, 116, 139, 0.4)',
+              borderRadius: 4
+            }
+          ]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { ticks: { color: '#94A3B8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { ticks: { color: '#94A3B8', font: { family: 'Plus Jakarta Sans', size: 11 } }, grid: { display: false } }
+          },
+          plugins: { legend: { labels: { color: '#94A3B8' } } }
+        }
+      });
+
+      // 6. Category Overdue
+      charts.categoryLag = new Chart(document.getElementById('chartCategoryLag'), {
+        type: 'bar',
+        data: {
+          labels: ['Office Furniture', 'Consoles & Games', 'Furniture & Decor', 'Pet Shop', 'Computers & Acc', 'Stationery', 'Baby', 'Telephony', 'Housewares'],
+          datasets: [{
+            label: 'Tỷ Lệ Seller Trễ Hạn (%)',
+            data: [28.25, 13.03, 11.99, 11.47, 11.08, 10.47, 10.17, 9.74, 9.53],
+            backgroundColor: (ctx) => ctx.raw > 20 ? '#EF4444' : '#F59E0B',
+            borderRadius: 4
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { ticks: { color: '#94A3B8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { ticks: { color: '#94A3B8', font: { family: 'Plus Jakarta Sans', size: 11 } }, grid: { display: false } }
+          },
+          plugins: { legend: { display: false } }
+        }
+      });
+
+      // 7. Category Days
+      charts.categoryDays = new Chart(document.getElementById('chartCategoryDays'), {
+        type: 'bar',
+        data: {
+          labels: ['Office Furniture', 'Consoles & Games', 'Furniture & Decor', 'Computers & Acc', 'Telephony', 'Baby', 'Pet Shop', 'Stationery', 'Housewares'],
+          datasets: [{
+            label: 'Số Ngày Xử Lý Hàng Trung Bình (Ngày)',
+            data: [10.8, 3.9, 3.7, 3.7, 3.5, 3.3, 3.2, 3.1, 3.1],
+            backgroundColor: (ctx) => ctx.raw > 8 ? '#EF4444' : '#38BDF8',
+            borderRadius: 4
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { ticks: { color: '#94A3B8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { ticks: { color: '#94A3B8', font: { family: 'Plus Jakarta Sans', size: 11 } }, grid: { display: false } }
+          },
+          plugins: { legend: { display: false } }
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>
+"""
+
+with open(html_path, "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print(f"[+] Successfully generated paginated interactive HTML dashboard: {html_path}")
