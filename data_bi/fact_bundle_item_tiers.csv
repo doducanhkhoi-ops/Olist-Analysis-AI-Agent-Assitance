@@ -1,0 +1,5 @@
+item_bundle_tier,total_orders,total_gmv,aov,avg_delivery_days,avg_handling_days,avg_transit_days,late_delivery_pct,avg_review_score,pct_1_star
+1. Don 1 mon,86391,12977531.64,150.22,12.61,3.18,9.42,8.29,4.21,8.43
+2. Don 2 mon,7787,1649379.97,211.81,11.93,3.37,8.54,6.74,3.71,18.88
+3. Don 3-5 mon,2035,686443.29,337.32,11.81,3.72,8.07,6.09,3.49,23.83
+4. Don tren 5 mon,265,176310.65,665.32,11.9,4.77,7.11,6.42,3.28,28.68

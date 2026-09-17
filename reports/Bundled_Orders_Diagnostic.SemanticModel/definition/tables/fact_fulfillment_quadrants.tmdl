@@ -1,0 +1,118 @@
+table fact_fulfillment_quadrants
+	lineageTag: 0b8baa4a-ad18-41ad-bb0a-3806925618ad
+
+	column delivery_quadrant_id
+		dataType: string
+		lineageTag: 379cea90-c74f-4cbb-93f4-d0f88c9572a0
+		summarizeBy: none
+		sourceColumn: delivery_quadrant_id
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_quadrant
+		dataType: string
+		lineageTag: 9399cb63-6c90-46f2-ac51-23e8abe27850
+		summarizeBy: none
+		sourceColumn: delivery_quadrant
+		annotation SummarizationSetBy = Automatic
+
+	column total_orders
+		dataType: int64
+		formatString: #,##0
+		lineageTag: e8d5c87b-01f1-4882-86ba-f0ba1c96d149
+		summarizeBy: sum
+		sourceColumn: total_orders
+		annotation SummarizationSetBy = Automatic
+
+	column order_share_pct
+		dataType: double
+		lineageTag: 86a706b8-572a-428d-b141-59ce0435acc5
+		summarizeBy: sum
+		sourceColumn: order_share_pct
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_gmv
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: a451f88b-a41d-4995-94d5-75689eb4819b
+		summarizeBy: sum
+		sourceColumn: total_gmv
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column aov
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 11bc3ed4-160b-457d-bab2-fecc5a46ec0b
+		summarizeBy: sum
+		sourceColumn: aov
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_review_score
+		dataType: double
+		lineageTag: 3df1d4ed-e9b8-4a39-b88c-11b2e7a2c0df
+		summarizeBy: sum
+		sourceColumn: avg_review_score
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column one_star_pct
+		dataType: double
+		lineageTag: b55030ad-1f14-49e9-a760-0a7d6def192d
+		summarizeBy: sum
+		sourceColumn: one_star_pct
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column five_star_pct
+		dataType: double
+		lineageTag: ee9153c3-e2ad-45fb-9cb6-7d479a7ac976
+		summarizeBy: sum
+		sourceColumn: five_star_pct
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_seller_handling_days
+		dataType: double
+		lineageTag: d84eb7e6-c41c-4228-b2e9-7faef8b088a2
+		summarizeBy: sum
+		sourceColumn: avg_seller_handling_days
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_carrier_transit_days
+		dataType: double
+		lineageTag: 6a34d224-b5b9-4fbe-92ba-cf7e74072d26
+		summarizeBy: sum
+		sourceColumn: avg_carrier_transit_days
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_total_delivery_days
+		dataType: double
+		lineageTag: 1f79a69c-ab52-4a4a-9df0-fbf91211b1f2
+		summarizeBy: sum
+		sourceColumn: avg_total_delivery_days
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_sla_buffer_days
+		dataType: double
+		lineageTag: faec2767-b6e7-4a81-b4a7-25237fcd1261
+		summarizeBy: sum
+		sourceColumn: avg_sla_buffer_days
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_fulfillment_quadrants = m
+		mode: import
+		source =
+				let
+				    Nguon = Csv.Document(File.Contents("c:\\Users\\ASUS\\Documents\\Năm III\\CSDL\\data_bi\\fact_fulfillment_quadrants.csv"),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tieu de Duoc Tang cap" = Table.PromoteHeaders(Nguon, [PromoteAllScalars=true]),
+				    #"Thay doi Loai" = Table.TransformColumnTypes(#"Tieu de Duoc Tang cap",{{"delivery_quadrant_id", type text}, {"delivery_quadrant", type text}, {"total_orders", Int64.Type}, {"order_share_pct", type number}, {"total_gmv", type number}, {"aov", type number}, {"avg_review_score", type number}, {"one_star_pct", type number}, {"five_star_pct", type number}, {"avg_seller_handling_days", type number}, {"avg_carrier_transit_days", type number}, {"avg_total_delivery_days", type number}, {"avg_sla_buffer_days", type number}})
+				in
+				    #"Thay doi Loai"
+
+	annotation PBI_ResultType = Table

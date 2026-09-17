@@ -1,0 +1,7 @@
+basket_type,is_late,total_orders,pct_within_basket,avg_review_score,pct_1_star,aov,avg_delivery_days
+1. Don Don,Dung Han (On-time),79231,91.71,4.36,5.14,148.75,10.9
+1. Don Don,Tre Han (Late),7160,8.29,2.58,44.87,166.44,31.6
+2. Don Gop 1 Seller,Dung Han (On-time),8164,92.65,3.88,15.59,247.24,10.86
+2. Don Gop 1 Seller,Tre Han (Late),648,7.35,2.47,47.69,248.09,30.57
+3. Don Gop Da Seller,Dung Han (On-time),1257,98.59,2.87,34.84,261.06,8.88
+3. Don Gop Da Seller,Tre Han (Late),18,1.41,2.0,61.11,265.32,25.74
