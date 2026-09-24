@@ -5,17 +5,64 @@ OLIST.zip
 *.zip
 *.tar.gz
 *.csv
-!data_bi/*.csv
 
-
-# Installers & Executables
+# Exclude Specific Analysis Project Outputs & Reports
+reports/
+data_bi/
+data/
+bundled_orders_delivery_audit/
+monthly_delivery_fulfillment_audit/
+monthly_new_customer_retention_audit/
+regional_delivery_sla_audit/
+product_revenue_deep_dive/
+Olist G9/
+PowerBI report/
+Report c*/
+AwesomeChocolates_Executive/
+*.pbip
+*.pbit
+*.pbix
+*.xlsx
+*.pptx
 *.msi
 *.exe
 mysql-8.0.42-winx64/
-
-# Large Power BI & PDF Files
-*.pbix
 *.pdf
+*.svg
+*.png
+
+# Exclude Project Report HTML & Scratch Scripts
+*.html
+!Skill/**/*.html
+build_*.py
+generate_*.py
+check_*.py
+send_*.py
+patch_*.py
+sync_*.py
+init_*.py
+append_*.py
+inspect_*.py
+capture_*.py
+temp_*.js
+extracted_*.js
+*.bat
+*.ps1
+find_sql_in_pdf.py
+update_handover_cockpit_html.py
+scripts_build_pbit.py
+scripts/
+query.py
+plot.py
+gen.py
+auto_report*.py
+test_data_fetch.py
+create_styled_pbi_report.py
+convert_to_js.py
+presentation_batch.json
+report_state.json
+strategic_report_state.json
+yesterday_*
 
 # Python Cache & Environments
 *.bak
@@ -28,7 +75,7 @@ env/
 venv/
 .venv/
 
-# Environment Secrets
+# Environment Secrets & Local Config
 .env
 *.local.json
 
