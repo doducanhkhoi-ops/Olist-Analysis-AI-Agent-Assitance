@@ -6,6 +6,9 @@ OLIST.zip
 *.tar.gz
 *.csv
 
+# Exclude External Skills Archive (Downloaded GitHub Repositories in Skill/)
+Skill/
+
 # Exclude Specific Analysis Project Outputs & Reports
 reports/
 data_bi/
@@ -33,7 +36,6 @@ mysql-8.0.42-winx64/
 
 # Exclude Project Report HTML & Scratch Scripts
 *.html
-!Skill/**/*.html
 build_*.py
 generate_*.py
 check_*.py
