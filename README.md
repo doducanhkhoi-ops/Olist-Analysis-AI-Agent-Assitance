@@ -1,104 +1,67 @@
-# Antigravity & Agentic Data Analytics System
+<div align="center">
 
-Bộ khung tư duy phân tích dữ liệu chẩn đoán (Diagnostic Analytics Engine), hệ thống quy chuẩn vận hành (Rules), kỹ năng chuyên sâu (Skills) và MCP kết nối cho trợ lý AI Antigravity.
+# Olist-Analysis-AI-Agent-Assitance
+
+**Diagnostic analytics engine, 20 domain skills, and interactive HTML/BI cockpits for the Olist e-commerce dataset.**
+
+[![CI](https://github.com/doducanhkhoi-ops/Olist-Analysis-AI-Agent-Assitance/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/doducanhkhoi-ops/Olist-Analysis-AI-Agent-Assitance/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/doducanhkhoi-ops/Olist-Analysis-AI-Agent-Assitance/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/doducanhkhoi-ops/Olist-Analysis-AI-Agent-Assitance/actions/workflows/codeql.yml)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/github/license/doducanhkhoi-ops/Olist-Analysis-AI-Agent-Assitance)](./LICENSE)
+
+</div>
 
 ---
 
-## 1. Cấu Trúc Hệ Thống
+Combines a 6-step diagnostic analytics workflow (`AnalyticFlow.md`), Power BI / MySQL data generators, and self-contained HTML executive cockpits.
 
-```text
-├── .agents/
-│   ├── plugins/
-│   │   └── powerbi-mcp/          # Cấu hình plugin kết nối Power BI Modeling MCP
-│   ├── rules/
-│   │   ├── AnalyticFlow.md       # Quy chuẩn tư duy chẩn đoán 6 bước và kỷ luật phân tích
-│   │   └── data-analyst-diagnostic-mindset.md # Quy chuẩn hiển thị trình tự phân tích trên chat
-│   └── skills/                   # 20 bộ kỹ năng chuyên ngành cho AI Data Analyst
-│       ├── ai-data-analysis-orchestration/
-│       ├── olist-strategic-analytics/
-│       ├── data-analyst/
-│       ├── sql-analysis/
-│       ├── sql-optimization-patterns/
-│       ├── database-design/
-│       ├── data-qa/
-│       ├── data-storytelling/
-│       ├── excel-visualization/
-│       ├── powerbi-report-authoring/
-│       ├── powerbi-report-design/
-│       ├── semantic-model-authoring/
-│       ├── python-powerbi-styled-generator/
-│       ├── fast-pptx-generator/
-│       ├── hallmark/
-│       ├── dbhub/
-│       ├── churn-prevention/
-│       ├── dashboard-spec/
-│       ├── executive-memo/
-│       └── financial-modeling/
-├── AnalyticFlow.md               # Bản đặc tả quy chuẩn tư duy chẩn đoán gốc
-└── GEMINI.md                     # Quy tắc hệ thống Antigravity cho phân tích dữ liệu
+---
+
+## Why Olist-Analysis-AI-Agent-Assitance?
+
+- **6-step diagnostic flow**: Enforces symptom → multi-dimensional hypothesis → data slicing → paradox resolution → root cause → quantified recommendation.
+- **20 specialized skills**: Covers SQL optimization, data QA, financial modeling, churn prevention, Power BI authoring, and executive storytelling under `.agents/skills/`.
+- **4 HTML cockpits**: Interactive freight deadweight, fulfillment handover, payment financing, and year-end logistics diagnostics.
+- **Automated BI builders**: Python generators for `.xlsx` workbooks and `.pbip` Power BI projects.
+
+---
+
+## Feature Overview
+
+| Component | Behavior |
+| --- | --- |
+| **Diagnostic Rules** (`AnalyticFlow.md`, `GEMINI.md`) | Enforces anti-hallucination data QA and structured root-cause analysis |
+| **Data & BI Generators** (`generate_*.py`, `build_*.py`) | Queries MySQL (`check_db_connection.py`) and builds `.xlsx` / `.pbip` outputs |
+| **HTML Cockpits** (`*_Cockpit.html`, `*_diagnostic.html`) | Standalone browser dashboards for freight, fulfillment, and payment diagnostics |
+| **Agent Skills** (`.agents/skills/`) | 20 modular `SKILL.md` playbooks for analytics and BI tooling |
+
+---
+
+## Quick Start
+
+```bash
+git clone https://github.com/doducanhkhoi-ops/Olist-Analysis-AI-Agent-Assitance.git
+cd Olist-Analysis-AI-Agent-Assitance
+pip install -r requirements.txt
+cp .env.example .env
+python check_db_connection.py
 ```
 
 ---
 
-## 2. Quy Chuẩn Tư Duy Chẩn Đoán 6 Bước (Diagnostic Mindset)
+## Testing & Security
 
-Mọi phân tích dữ liệu đều tuân theo quy trình 6 bước:
-
-```text
-[1. Triệu chứng bề mặt]
-         │
-         ▼
-[2. Giả thuyết đa chiều (Cung - Cầu - Vận hành)]
-         │
-         ▼
-[3. Cắt lớp dữ liệu (Thực tế vs ảo, địa lý, ma trận)]
-         │
-         ▼
-[4. Giải mã nghịch lý kinh doanh]
-         │
-         ▼
-[5. Xác định căn bệnh cốt lõi]
-         │
-         ▼
-[6. Kịch bản khắc phục và hành động]
+```bash
+python -m unittest discover -s tests -v
 ```
 
-### Kỷ luật phân tích cốt lõi:
-1. **Hợp đồng Grain:** Không tính toán tổng tiền trên các bảng nối ba (`orders` x `items` x `payments`). Gộp trước (Aggregate), nối sau (Join).
-2. **Kiểm định khóa:** Xác thực tính duy nhất của khóa ngoại trước khi phân tích. Không giả định khóa luôn hợp lệ.
-3. **Kiểm soát biến nhiễu:** Khi so sánh hai nhóm, bắt buộc kiểm soát biến số lượng hàng, giá trị đơn, địa lý và mùa vụ bằng phương pháp chuẩn hóa trực tiếp.
-4. **Trực quan hóa tức thì:** Trình bày kết quả theo chu trình: Mục tiêu định hướng -> Mã SQL -> Bảng dữ liệu thực tế -> Biểu đồ inline widget tương tác -> Phân tích kết luận.
+| Check | Tool | Scope |
+| --- | --- | --- |
+| **Integrity & Syntax** | `pytest` (`3.10`, `3.11`, `3.12`) | Bytecode compile on all `.py` scripts, HTML cockpit validation, `SKILL.md` presence |
+| **SAST** | GitHub CodeQL | Static vulnerability analysis on Python source |
 
 ---
 
-## 3. Danh Mục Kỹ Năng (Skills)
+## License
 
-| Kỹ năng | Vai trò |
-| :--- | :--- |
-| **`ai-data-analysis-orchestration`** | Điều phối toàn diện chu trình phân tích: SQL, Excel, HTML và Power BI PBIP. |
-| **`olist-strategic-analytics`** | Khung phân tích thương mại điện tử chuyên sâu (Mô hình đa vùng, SLA vận chuyển, RFM, bài toán duy trì). |
-| **`data-analyst`** | Quy trình phân tích dữ liệu đầu-cuối: Định nghĩa chỉ số, QA dữ liệu, Cohort và Experiment. |
-| **`sql-analysis`** | Kỹ thuật viết truy vấn SQL phân tích doanh thu, hành vi, tỷ lệ duy trì và phễu chuyển đổi. |
-| **`sql-optimization-patterns`** | Chẩn đoán và tối ưu hiệu năng truy vấn SQL với Execution Plan. |
-| **`database-design`** | Thiết kế lược đồ dữ liệu, chiến lược đánh chỉ mục (Index) và chuẩn hóa dữ liệu. |
-| **`data-qa`** | Kiểm toán chất lượng dữ liệu: Trùng lặp, giá trị rỗng, ngoại lai và xung đột dữ liệu. |
-| **`data-storytelling`** | Chuyển đổi dữ liệu và phân tích thành câu chuyện trực quan phục vụ ra quyết định. |
-| **`excel-visualization`** | Tự động hóa bảng tính Excel, tạo dashboard tài chính và biểu đồ với Python (`xlsxwriter`, `openpyxl`). |
-| **`powerbi-report-authoring`** | Xây dựng và tinh chỉnh báo cáo Power BI định dạng PBIR / PBIP theo schema chuẩn. |
-| **`powerbi-report-design`** | Thiết kế bố cục, bảng màu và trải nghiệm người dùng cho báo cáo Power BI. |
-| **`semantic-model-authoring`** | Thiết kế mô hình dữ liệu ngữ nghĩa, công thức DAX và định dạng TMDL. |
-| **`python-powerbi-styled-generator`** | Tự động tạo Power BI template và áp dụng theme chuẩn. |
-| **`fast-pptx-generator`** | Tạo slide thuyết trình tự động định dạng 16:9 với `python-pptx`. |
-| **`hallmark`** | Tiêu chuẩn thiết kế giao diện web, dashboard HTML sạch, chống khuôn mẫu AI. |
-| **`dbhub`** | Khai thác cơ sở dữ liệu qua DBHub MCP. |
-| **`churn-prevention`** | Chiến lược giữ chân khách hàng và giảm tỷ lệ rời bỏ. |
-| **`dashboard-spec`** | Đặc tả kỹ thuật và tiêu chuẩn nghiệp vụ cho dashboard điều hành. |
-| **`executive-memo`** | Định dạng báo cáo tóm tắt dành cho cấp quản lý. |
-| **`financial-modeling`** | Xây dựng mô hình tài chính, unit economics và dự báo kinh doanh. |
-
----
-
-## 4. Cấu Hình MCP & Plugins
-
-* **Power BI Modeling MCP:** Cung cấp kết nối trực tiếp với mô hình Power BI qua tệp cấu hình `.agents/plugins/powerbi-mcp/mcp_config.json`.
-* **Cơ sở dữ liệu hỗ trợ:** MySQL, SQLite và các hệ quản trị CSDL quan hệ thông qua các bộ tool MCP tương thích.
+[Apache License 2.0](./LICENSE)
