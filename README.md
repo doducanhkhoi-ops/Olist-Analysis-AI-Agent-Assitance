@@ -15,6 +15,8 @@
 
 Combines a 6-step diagnostic analytics workflow (`AnalyticFlow.md`), Power BI / MySQL data generators, and self-contained HTML executive cockpits.
 
+![Fulfillment Handover Diagnostic Preview](./Fulfillment_Handover_Preview.svg)
+
 ---
 
 ## Why Olist-Analysis-AI-Agent-Assitance?
